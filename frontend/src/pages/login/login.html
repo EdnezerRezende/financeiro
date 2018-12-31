@@ -1,0 +1,40 @@
+<ion-content padding>
+  <div class="splash-bg"></div>
+  <div class="splash-info">
+    <div class="splash-logo"></div>
+    <div class="splash-intro">
+      Financeiro
+    </div>
+  </div>
+  <div padding>
+    <form #form="ngForm" (ngSubmit)="login(form.value)" novalidate>
+      <ion-list>
+        <ion-item>
+          <ion-label floating>Usuário</ion-label>
+          <ion-input type="text" name="username" ngModel required #username="ngModel"
+                    [class.invalid]="username.errors && username.dirty"></ion-input>
+        </ion-item>
+        <ion-item class="error-message" *ngIf="username.errors?.required && username.dirty">
+          Usuário/E-mail é requerido.
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>Senha</ion-label>
+          <ion-input type="password" name="password" ngModel required #password="ngModel"
+                    [class.invalid]="password.errors && password.dirty"></ion-input>
+        </ion-item>
+        <ion-item class="error-message" *ngIf="password.errors?.required && password.dirty">
+          A senha é requerida.
+        </ion-item>
+
+        <div padding>
+          <button ion-button color="primary" block type="submit" [disabled]="!form.valid">Login</button>
+        </div>
+
+        <!-- <div padding>
+          <button ion-button color="secondary" block type="button" (click)="signup()">Sign up</button>
+        </div> -->
+      </ion-list>
+    </form>
+  </div>
+</ion-content>
