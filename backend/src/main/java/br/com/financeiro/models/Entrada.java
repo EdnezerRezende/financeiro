@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 public class Entrada  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

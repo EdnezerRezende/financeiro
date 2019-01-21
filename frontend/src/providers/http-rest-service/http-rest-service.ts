@@ -13,7 +13,7 @@ const TOKEN_HEADER_KEY = 'Authorization';
 export class HttpRestServiceProvider {
 
   // private _url = 'http://192.168.1.248:8080/api/';
-  private _url = 'http://192.168.0.49:8080/api/';
+  private _url = 'http://localhost:8080/api/';
   // private _url = 'https://gestaolaboratorio.herokuapp.com/api/';
 
 
@@ -40,8 +40,7 @@ export class HttpRestServiceProvider {
     this._headers = new HttpHeaders({ 'Content-Type': 'application/json;charset=UTF-8'
     ,'Access-Control-Allow-Origin': '*'
     ,'Authorization': 'Bearer ' + jwt
-  });  
-
+    });  
     // this._headers.append('Authorization', 'Bearer '+ jwt);
   }
   
