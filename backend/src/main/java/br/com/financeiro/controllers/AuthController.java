@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @Api(value = "Auth", description = "login")
@@ -58,19 +59,13 @@ public class AuthController {
 //    @RequestMapping(value = "/api/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @PostMapping("/api/login")
     @CrossOrigin
-    public String authorize(@Valid @RequestBody Usuario loginUser,
-                            HttpServletResponse response) {
+    public String authorize(@Valid @RequestBody Usuario loginUser)  {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 loginUser.getUsername(), loginUser.getPassword());
 
-        try {
-            authenticationManager.authenticate(authenticationToken);
-            return tokenProvider.createToken(loginUser.getUsername());
-        } catch (AuthenticationException e) {
-            AppWebConfiguration.logger.info("Security exception {}", e.getMessage());
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return null;
-        }
+        authenticationManager.authenticate(authenticationToken);
+        return tokenProvider.createToken(loginUser.getUsername());
+
     }
 
     @PostMapping("/api/signup")

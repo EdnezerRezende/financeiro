@@ -41,11 +41,12 @@ export class LoginPage {
 
   handleError(error: any) {
     let message: string;
-    if (error.status && error.status === 401) {
-      message = 'Login failed';
+    console.log(error);
+    if (error.status && error.status === 400) {
+      message = error.error;
     }
     else {
-      message = `Unexpected error: ${error.statusText}`;
+      message = `error + error.error`;
     }
 
     const toast = this._toastCtrl.create({
