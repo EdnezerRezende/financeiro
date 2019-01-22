@@ -42,9 +42,7 @@ export class AuthProvider {
   }
 
   login(values: any): Observable<any> {
-    return this._httpClient.post(`${this._url}login`, values, {headers: { 'Content-Type': 'application/json;charset=UTF-8'
-    ,'Access-Control-Allow-Origin': '*'
-    }})
+    return this._httpClient.post(`${this._url}login`, values, {responseType: 'text'})
       .pipe(tap(jwt => this.handleJwtResponse(jwt, values)));
   }
 

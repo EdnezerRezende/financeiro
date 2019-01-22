@@ -37,9 +37,13 @@ public class AuthController {
         this.authenticationManager = authenticationManager;
 
 //        Usuario user = new Usuario();
-//        user.setEmail("admin");
-//        user.setSenha(this.passwordEncoder.encode("admin"));
-//        this.userService.salvar(user);
+//        user.setEmail("godoirezende@gmail.com");
+//        user.setCpf("78671043134");
+//        try {
+//            this.userService.salvar(user);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @GetMapping("/api/authenticate")
@@ -59,12 +63,19 @@ public class AuthController {
 //    @RequestMapping(value = "/api/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @PostMapping("/api/login")
     @CrossOrigin
-    public String authorize(@Valid @RequestBody Usuario loginUser)  {
+    public String authorize(@Valid @RequestBody Usuario loginUser,
+                            HttpServletResponse response)  {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 loginUser.getUsername(), loginUser.getPassword());
 
-        authenticationManager.authenticate(authenticationToken);
-        return tokenProvider.createToken(loginUser.getUsername());
+        try {
+            authenticationManager.authenticate(authenticationToken);
+            return tokenProvider.createToken(loginUser.getUsername());
+        } catch (AuthenticationException e) {
+            AppWebConfiguration.logger.info("Security exception {}", e.getMessage());
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return null;
+        }
 
     }
 

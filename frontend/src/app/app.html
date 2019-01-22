@@ -1,7 +1,7 @@
 <!-- <ion-split-pane> -->
         <ion-menu [content]="conteudo" id="cabecalho-menu" *ngIf="mostraMenuLateral">
             <ion-content>
-                <!-- <ion-item id="cabecalho-menu" class="cabecalho-menu">
+                <ion-item id="cabecalho-menu" class="cabecalho-menu">
                     <div>
                         <ion-avatar item-start>
                             <img [src]="avatar">
@@ -12,7 +12,7 @@
                     <button menuClose ion-button round (click)="logoff() " icon-start>
                         <ion-icon name="md-exit"></ion-icon> SAIR
                     </button>
-                </ion-item> -->
+                </ion-item>
             
                 <ion-list sliding="false" id="aberturaMenu" >
                     <ion-item no-lines id="aberturaMenu" *ngFor="let pagina of paginas | orderBy:'titulo'; let i=index" text-wrap 
