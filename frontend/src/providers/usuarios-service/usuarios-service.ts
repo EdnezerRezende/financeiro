@@ -52,7 +52,15 @@ export class UsuariosServiceProvider {
     // {headers: this._headers
     {headers: {'Authorization': 'Bearer ' + jwt, 'Content-Type': 'application/json;charset=UTF-8', 'Access-Control-Allow-Origin': '*'}
   })
-    .subscribe((usuarioR:Usuario)=> {this._usuarioLogado = usuarioR; this.mostraMenuLateral = true;});
+    .subscribe((usuarioR:Usuario)=> {
+      this._usuarioLogado = usuarioR; 
+      localStorage.setItem('usuario_cpf', this._usuarioLogado.cpf);
+      localStorage.setItem('usuario_email', this._usuarioLogado.email);
+      localStorage.setItem('usuario', JSON.stringify(this._usuarioLogado));
+      localStorage.setItem('conta', JSON.stringify(this._usuarioLogado.conta));
+
+      this.mostraMenuLateral = true;
+    });
   }
 
   obterMenuLateral(){

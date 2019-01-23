@@ -1,7 +1,9 @@
+import { Conta } from "./conta";
+
 export class Usuario {
     id:number;
     nome: string;
-    dataNascimento: string;
+    dataNascimento: Date;
     email: string;
     telefone: string;
     senha: string;
@@ -11,6 +13,6 @@ export class Usuario {
     cpf: string;
     dataCadastro:Date;
     bloqueado: boolean;
-
+    conta:Conta;
 
 }

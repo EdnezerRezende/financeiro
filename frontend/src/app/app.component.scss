@@ -17,7 +17,7 @@ myapp {
         }
 
         p {
-            color: #1b0000;
+            color: white;
         }
     }
     .fundoImagem{
@@ -66,5 +66,8 @@ myapp {
     }
     .ios.ion-page.show-page.nav-decor{
         background: none;
+    }
+    .center{
+        text-align: center;
     }
 }

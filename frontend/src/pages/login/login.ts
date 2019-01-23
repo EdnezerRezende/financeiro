@@ -12,6 +12,8 @@ import { UsuariosServiceProvider } from '../../providers/usuarios-service/usuari
 })
 export class LoginPage {
 
+  username:string = '';
+  senha: 7867;
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private  _loadingCtrl: LoadingController,
     private _toastCtrl: ToastController,

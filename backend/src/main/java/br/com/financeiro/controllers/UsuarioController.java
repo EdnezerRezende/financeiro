@@ -9,10 +9,7 @@ import javax.annotation.security.RolesAllowed;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.financeiro.models.Usuario;
 import br.com.financeiro.service.UsuarioService;
@@ -45,6 +42,7 @@ public class UsuarioController {
     @ApiOperation(value = "Usuário Logado")
 	@GetMapping(value = "/usuario/usuarioLogado", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)	
     @RequestMapping(value = "usuarioLogado", method = POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @CrossOrigin
     public Usuario usuarioLogado(@RequestBody(required = true) String email) {
 
         return usuarioService.lookup(email);

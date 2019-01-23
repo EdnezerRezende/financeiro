@@ -1,12 +1,23 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Entradas</ion-title>
+  <ion-navbar >
+    <ion-title >Entradas</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <p>Lista de Entradas</p>
+    <ion-searchbar animated=true placeholder="Pesquisar " (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-list sliding="true" >
+      <ion-item detail-push  *ngFor="let entrada of entradas">
+        <h2><label>Nome da Entrada: </label>{{entrada.nomeEntrada | uppercase}}</h2>
+        <h4><label>Descrição: </label>{{entrada.descricao | uppercase}}</h4>
+        <h4><label>Fonte: </label>{{entrada.fonte | uppercase}}</h4>
+        <h4><label>Valor: </label>{{entrada.valor | currency:'R$ ' }} </h4>
+        <h4><label>Data Entrada: </label>{{entrada.dataEntrada | date: 'dd/MM/yyyy'}}</h4>
+        <ion-icon (click)="deletarEntrada(entrada)" item-right isActive="true" name="md-trash"></ion-icon>
+      </ion-item>
+    </ion-list>
+    <h5><label>Total:</label> {{totalEntradas | currency:'R$ '}}</h5>
 </ion-content>
