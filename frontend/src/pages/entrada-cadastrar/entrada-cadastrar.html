@@ -1,26 +1,62 @@
 <ion-header>
-
   <ion-navbar class="center">
     <ion-title >Cadastar Entrada</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-    <form  [formGroup]="formulario"  >
-        <ion-item >
-          <ion-label stacked >Nome da Entrada</ion-label>
-          <ion-input [(ngModel)]="entrada.nomeEntrada" formControlName="nomeEntrada" name="nomeEntrada"  type="text"></ion-input>
-        </ion-item>
-        <h6 class="error" *ngIf="!formulario.controls.nomeEntrada.valid && (formulario.controls.nomeEntrada.dirty || formulario.controls.nomeEntrada.touched)">
-          Por favor, informe de onde veio a entrada.
-        </h6>
-        
-      </form>
-      <ion-fab top right edge >
-        <button ion-fab (click)="salvarEntrada()" [disabled]="formulario.invalid">
-          <ion-icon name="send"></ion-icon>
-        </button>
-      </ion-fab> 
+  <form  [formGroup]="formulario"  >
+    <ion-item >
+      <ion-label stacked >Nome da Entrada</ion-label>
+      <ion-input [(ngModel)]="entrada.nomeEntrada" formControlName="nomeEntrada" name="nomeEntrada"  type="text"></ion-input>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.nomeEntrada.valid && (formulario.controls.nomeEntrada.dirty || formulario.controls.nomeEntrada.touched)">
+      Por favor, informe de onde veio a entrada.
+    </h6>
+    
+    <ion-item >
+      <ion-label stacked >Descrição</ion-label>
+      <ion-input [(ngModel)]="entrada.descricao" formControlName="descricao" name="descricao"  type="text"></ion-input>
+    </ion-item>
+    
+    <ion-item >
+      <ion-label stacked >Fonte</ion-label>
+      <ion-input [(ngModel)]="entrada.fonte" formControlName="fonte" name="fonte"  type="text"></ion-input>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.fonte.valid && (formulario.controls.fonte.dirty || formulario.controls.fonte.touched)">
+      Por favor, informe o nome da fonte. Ex.: Se salário, informar o nome da empresa.
+    </h6>
+
+    <ion-item >
+      <ion-label stacked >Valor</ion-label>
+      <ion-input type="text" [(ngModel)]="entrada.valor " [brmasker]="{money: true}" formControlName="valor" name="valor"  type="text"></ion-input>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.valor.valid && (formulario.controls.valor.dirty || formulario.controls.valor.touched)">
+      Por favor, informe o valor recebido.
+    </h6>
+
+    <ion-item>
+      <ion-label stacked >Origem</ion-label>
+      <ion-select [(ngModel)]="entrada.origem"  formControlName="origem" [compareWith]="compareFn">
+        <ion-option *ngFor="let origem of origens"  [value]="origem">{{origem.descricao | uppercase}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.origem.valid && (formulario.controls.origem.dirty || formulario.controls.origem.touched)">
+        Por favor, informe a origem do recebimento. Ex.: Se aluguel, informar Aluguel.
+    </h6>
+
+    <ion-item >
+      <ion-label stacked >Data do Pagamento</ion-label>
+      <ion-datetime  displayFormat="DD/MM/YYYY" doneText="Selecionar" cancelText="Cancelar"  formControlName="dataEntrada"  name="dataEntrada" [(ngModel)]="entrada.dataEntrada"></ion-datetime>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.dataEntrada.valid && (formulario.controls.dataEntrada.dirty || formulario.controls.dataEntrada.touched)">
+        Por favor, informe a data de Pagamento.
+    </h6>
+
+  </form>
+  <ion-fab top right edge >
+    <button ion-fab (click)="salvarEntrada()" [disabled]="formulario.invalid">
+      <ion-icon name="send"></ion-icon>
+    </button>
+  </ion-fab> 
 </ion-content>

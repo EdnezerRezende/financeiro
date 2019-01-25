@@ -13,7 +13,7 @@ const TOKEN_HEADER_KEY = 'Authorization';
 export class HttpRestServiceProvider {
 
   // private _url = 'http://192.168.1.248:8080/api/';
-  private _url = 'http://localhost:8080/api/';
+  private _url = 'http://localhost:8080/';
   // private _url = 'https://gestaolaboratorio.herokuapp.com/api/';
 
 

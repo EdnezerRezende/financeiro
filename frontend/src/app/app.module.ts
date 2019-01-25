@@ -31,6 +31,7 @@ import { HttpRestServiceProvider } from '../providers/http-rest-service/http-res
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { TokenStorage } from '../providers/http-rest-service/TokenStorage';
 import { UsuariosServiceProvider } from '../providers/usuarios-service/usuarios-service';
+import { EntradaServiceProvider } from '../providers/entrada-service/entrada-service';
 
 export function jwtOptionsFactory(storage: Storage) {
   return {
@@ -58,7 +59,11 @@ export function jwtOptionsFactory(storage: Storage) {
       pageTransition: 'md-transition  ',
       menuType: 'overlay'
     }),
-    IonicStorageModule.forRoot(),
+    // IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot({
+      name: '__mydb',
+      driverOrder: ['sqlite', 'websql', 'indexeddb']
+    }),
     JwtModule.forRoot({
       jwtOptionsProvider: {
         provide: JWT_OPTIONS,
@@ -90,7 +95,8 @@ export function jwtOptionsFactory(storage: Storage) {
     AuthProvider,
     HttpRestServiceProvider,
     TokenStorage,
-    UsuariosServiceProvider
+    UsuariosServiceProvider,
+    EntradaServiceProvider
     
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

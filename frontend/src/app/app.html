@@ -1,4 +1,4 @@
-<!-- <ion-split-pane> -->
+<ion-split-pane>
         
     <ion-menu [content]="conteudo" id="cabecalho-menu" *ngIf="mostraMenuLateral">
         <ion-header>
@@ -44,5 +44,5 @@
         </ion-content>
     </ion-menu>
 
-    <ion-nav  [root]="rootPage" id="nav" #conteudo swipeBackEnabled="false"></ion-nav>
-<!-- </ion-split-pane> -->
+    <ion-nav  [root]="rootPage" main id="nav" #conteudo swipeBackEnabled="false"></ion-nav>
+</ion-split-pane>
