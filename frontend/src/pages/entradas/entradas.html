@@ -10,7 +10,7 @@
 <ion-content padding>
     <ion-searchbar animated=true placeholder="Pesquisar " (ionInput)="getItems($event)"></ion-searchbar>
     <ion-list sliding="true" >
-      <ion-item detail-push  *ngFor="let entrada of entradas">
+      <ion-item detail-push  *ngFor="let entrada of entradasSearch">
         <h2><label>Nome da Entrada: </label>{{entrada.nomeEntrada | uppercase}}</h2>
         <h4><label>Descrição: </label>{{entrada.descricao | uppercase}}</h4>
         <h4><label>Fonte: </label>{{entrada.fonte | uppercase}}</h4>

@@ -25,6 +25,7 @@ export class EntradasPage {
     let conta: Conta =  JSON.parse(localStorage.getItem('conta'));
     
     this.entradas = conta.entradas;
+    this.entradasSearch = this.entradas;
     this.calcularVlrEntradas();
     loading.dismiss();
   }
@@ -52,6 +53,7 @@ export class EntradasPage {
         });
         
         this.entradas = entradasTemp;
+        
         
         this.calcularVlrEntradas();
 
@@ -98,7 +100,7 @@ export class EntradasPage {
     if (val && val.trim() != '') {
       this.entradasSearch = this.entradasSearch.filter((item) => {
         return (item.nomeEntrada.toLowerCase().indexOf(val.toLowerCase()) > -1 
-        || item.dataEntrada.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        );
       })
     }
   }

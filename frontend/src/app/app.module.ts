@@ -52,7 +52,7 @@ export function jwtOptionsFactory(storage: Storage) {
     BrowserModule,
     IonicModule.forRoot(MyApp, {
       backButtonText: 'Voltar',
-      iconMode: 'ios',
+      // iconMode: 'ios',
       modalEnter: 'modal-slide-in',
       modalLeave: 'modal-slide-out',
       tabsPlacement: 'bottom',
