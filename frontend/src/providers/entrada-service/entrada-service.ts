@@ -33,10 +33,14 @@ export class EntradaServiceProvider {
   salvarEntrada(entradas: Entrada[]){
     // let conta: Conta = JSON.parse(localStorage.getItem('conta'));
     let idConta = 1;
-    console.log(entradas);
-    console.log(this.jwtRecebido);
     return this._http.post(this._url + `salvarEntradas/${idConta}` , 
                             entradas, {headers: {'Authorization': 'Bearer ' + this.jwtRecebido, 'Content-Type': 
+                                                'application/json;charset=UTF-8', 'Access-Control-Allow-Origin': '*'}
+    });
+  }
+
+  excluirEntrada(idEntrada: number){
+    return this._http.delete(this._url + `excluirEntrada/${idEntrada}` ,  {headers: {'Authorization': 'Bearer ' + this.jwtRecebido, 'Content-Type': 
                                                 'application/json;charset=UTF-8', 'Access-Control-Allow-Origin': '*'}
     });
   }

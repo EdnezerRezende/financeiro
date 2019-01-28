@@ -5,6 +5,7 @@ import { HttpRestServiceProvider } from '../http-rest-service/http-rest-service'
 import {Storage} from "@ionic/storage";
 import { ReplaySubject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Entrada } from '../../modelos/entrada';
 
 const CHAVE = 'avatar-usuario';
 @Injectable()
@@ -54,6 +55,13 @@ export class UsuariosServiceProvider {
   })
     .subscribe((usuarioR:Usuario)=> {
       this._usuarioLogado = usuarioR; 
+      let entradasTemp: Entrada[] = new Array<Entrada>();
+      this._usuarioLogado.conta.entradas.forEach(entrada => {
+        if (!entrada.isDeletado){
+          entradasTemp.push(entrada);
+        }
+      });
+      this._usuarioLogado.conta.entradas = entradasTemp;
       localStorage.setItem('usuario_cpf', this._usuarioLogado.cpf);
       localStorage.setItem('usuario_email', this._usuarioLogado.email);
       localStorage.setItem('usuario', JSON.stringify(this._usuarioLogado));

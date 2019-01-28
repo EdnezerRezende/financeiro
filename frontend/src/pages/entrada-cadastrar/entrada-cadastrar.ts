@@ -4,6 +4,8 @@ import { Entrada } from '../../modelos/entrada';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EntradaServiceProvider } from '../../providers/entrada-service/entrada-service';
 import { finalize } from 'rxjs/operators';
+import { Conta } from '../../modelos/conta';
+import { TabsPage } from '../tabs/tabs';
 
 @IonicPage()
 @Component({
@@ -49,13 +51,25 @@ export class EntradaCadastrarPage {
   salvarEntrada(){
     let loading = this.obterLoading();
     loading.present();
+    this.entrada.isDeletado = false;
+    this.entrada.valor = parseFloat(this.entrada.valor+'');
+
     let entradas: Entrada[] = new Array<Entrada>();
     entradas.push(this.entrada);
+
     this._entradaService.salvarEntrada(entradas)
     .subscribe(
       () => {
         loading.dismiss();
-        // this._loading.finalizar();
+
+        let conta:Conta = JSON.parse(localStorage.getItem('conta'));
+
+        conta.entradas.forEach(entradaConta => {
+          entradas.push(entradaConta);
+        });
+        conta.entradas = entradas;
+        localStorage.setItem('conta', JSON.stringify(conta));
+
         this._alertCtrl.create({
           title: 'Sucesso',
           subTitle: 'Entrada inserida! Deseja inserir mais Entradas ? ',
@@ -68,7 +82,7 @@ export class EntradaCadastrarPage {
             },
             { text: 'Não', 
               handler: ()=>{
-                this.navCtrl.pop();
+                this.navCtrl.setRoot(TabsPage);
               } 
             }
           ]
@@ -92,7 +106,7 @@ export class EntradaCadastrarPage {
   }
 
   limparCamposFormulario(){
-    this.entrada.nomeEntrada = "";
+    this.inicializarFormulario();
   }
   
   compareFn(e1, e2): boolean {

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { Entrada } from '../../modelos/entrada';
 import { Conta } from '../../modelos/conta';
+import { EntradaServiceProvider } from '../../providers/entrada-service/entrada-service';
 
 @IonicPage()
 @Component({
@@ -10,11 +11,11 @@ import { Conta } from '../../modelos/conta';
 })
 export class EntradasPage {
   entradas:Entrada[];
-  entradasSearch: Entrada[];
+  entradasSearch: Entrada[] = new Array<Entrada>();
   totalEntradas: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private _loadingCtrl: LoadingController,
-    private _alertCtrl: AlertController) {
+    private _alertCtrl: AlertController, private _entradaService: EntradaServiceProvider) {
       this.obterEntradas();
   }
 
@@ -22,16 +23,68 @@ export class EntradasPage {
     let loading = this.obterLoading();
     loading.present();
     let conta: Conta =  JSON.parse(localStorage.getItem('conta'));
+    
     this.entradas = conta.entradas;
-    this.entradas.forEach(element => {
-      this.totalEntradas += element.valor;
-    });
-    this.totalEntradas
+    this.calcularVlrEntradas();
     loading.dismiss();
   }
 
+  private calcularVlrEntradas() {
+    this.totalEntradas = 0;
+    this.entradas.forEach(element => {
+      this.totalEntradas += element.valor;
+    });
+    this.totalEntradas;
+  }
+
   deletarEntrada(entrada:Entrada){
-    console.log(entrada);
+    let loading = this.obterLoading();
+    loading.present();
+    this._entradaService.excluirEntrada(entrada.idEntrada)
+    .subscribe(
+      () => {
+        loading.dismiss();
+        let entradasTemp: Entrada[] = new Array<Entrada>();
+        this.entradas.forEach(element => {
+          if ( element.idEntrada != entrada.idEntrada){
+              entradasTemp.push(element);
+          }
+        });
+        
+        this.entradas = entradasTemp;
+        
+        this.calcularVlrEntradas();
+
+        let conta:Conta = JSON.parse(localStorage.getItem('conta'));
+        
+        conta.entradas = this.entradas;
+
+        localStorage.setItem('conta', JSON.stringify(conta));
+
+        this._alertCtrl.create({
+          title: 'Sucesso',
+          subTitle: 'Entrada Deletada!',
+          buttons: [
+            {
+              text: 'Ok', 
+            }
+          ]
+        }).present();
+      },
+    (err) => {
+        console.log(err);
+        loading.dismiss();
+        this._alertCtrl.create({
+          title: 'Error',
+          subTitle: 'Registro não deletado',//err.error.message,
+          buttons: [
+            {
+              text: 'Ok'
+            }
+          ]
+        }).present();
+      }
+    );
   }
 
   copiaListaEntradas(){
