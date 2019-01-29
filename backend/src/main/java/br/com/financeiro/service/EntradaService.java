@@ -34,7 +34,7 @@ public class EntradaService {
 		for(Entrada entrada: entradas) {
 			entrada.setConta(conta);
 			entradaRepository.save(entrada);
-		};
+		}
 		
 	}
 	

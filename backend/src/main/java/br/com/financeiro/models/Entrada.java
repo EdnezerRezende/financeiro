@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
@@ -53,6 +52,7 @@ public class Entrada  implements Serializable {
 		this.conta = conta;
 		this.isDeletado = deletado;
 	}
-	
+
+	public Entrada(){}
 	
 }
