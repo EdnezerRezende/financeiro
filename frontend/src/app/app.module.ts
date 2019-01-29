@@ -32,6 +32,7 @@ import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { TokenStorage } from '../providers/http-rest-service/TokenStorage';
 import { UsuariosServiceProvider } from '../providers/usuarios-service/usuarios-service';
 import { EntradaServiceProvider } from '../providers/entrada-service/entrada-service';
+import { SaidaServiceProvider } from '../providers/saida-service/saida-service';
 
 export function jwtOptionsFactory(storage: Storage) {
   return {
@@ -96,7 +97,8 @@ export function jwtOptionsFactory(storage: Storage) {
     HttpRestServiceProvider,
     TokenStorage,
     UsuariosServiceProvider,
-    EntradaServiceProvider
+    EntradaServiceProvider,
+    SaidaServiceProvider
     
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
