@@ -34,14 +34,14 @@ export class EntradaServiceProvider {
     // let conta: Conta = JSON.parse(localStorage.getItem('conta'));
     let idConta = 1;
     return this._http.post(this._url + `salvarEntradas/${idConta}` , 
-                            entradas, {headers: {'Authorization': 'Bearer ' + this.jwtRecebido, 'Content-Type': 
-                                                'application/json;charset=UTF-8', 'Access-Control-Allow-Origin': '*'}
-    });
+                            entradas, {headers: this._headers});
+  }
+
+  obterEntradas(idConta:number){
+    return this._http.get(this._url + `listaEntradas/conta/${idConta}` , {headers: this._headers});
   }
 
   excluirEntrada(idEntrada: number){
-    return this._http.delete(this._url + `excluirEntrada/${idEntrada}` ,  {headers: {'Authorization': 'Bearer ' + this.jwtRecebido, 'Content-Type': 
-                                                'application/json;charset=UTF-8', 'Access-Control-Allow-Origin': '*'}
-    });
+    return this._http.delete(this._url + `excluirEntrada/${idEntrada}` ,  {headers: this._headers});
   }
 }

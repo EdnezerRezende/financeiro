@@ -24,10 +24,38 @@ export class EntradasPage {
     loading.present();
     let conta: Conta =  JSON.parse(localStorage.getItem('conta'));
     
-    this.entradas = conta.entradas;
-    this.entradasSearch = this.entradas;
-    this.calcularVlrEntradas();
-    loading.dismiss();
+    this._entradaService.obterEntradas(conta.idConta)
+    .subscribe(
+      (entradas:Entrada[]) => {
+        loading.dismiss();
+        
+        this.entradas = entradas;
+        
+        this.calcularVlrEntradas();
+
+        let conta:Conta = JSON.parse(localStorage.getItem('conta'));
+        
+        conta.entradas = this.entradas;
+        this.entradasSearch = this.entradas;
+
+        localStorage.setItem('conta', JSON.stringify(conta));
+
+      },
+    (err) => {
+        loading.dismiss();
+        this._alertCtrl.create({
+          title: 'Error',
+          subTitle: 'Não foi possível obter registros',
+          buttons: [
+            {
+              text: 'Ok'
+            }
+          ]
+        }).present();
+      }
+    );
+
+    
   }
 
   private calcularVlrEntradas() {
@@ -51,9 +79,8 @@ export class EntradasPage {
               entradasTemp.push(element);
           }
         });
-        
+        this.entradas = new Array<Entrada>();
         this.entradas = entradasTemp;
-        
         
         this.calcularVlrEntradas();
 

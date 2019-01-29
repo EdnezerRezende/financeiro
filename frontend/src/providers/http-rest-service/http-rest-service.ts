@@ -33,7 +33,8 @@ export class HttpRestServiceProvider {
 
   constructor(private _storage: Storage) {
     // this._headers.append('Authorization', 'Bearer '+ localStorage.getItem('jwt_token'));
-    // this.autorizacao = localStorage.getItem('jwt_token');
+    this.criarHeaderAutorizacao(localStorage.getItem('jwt_token'));
+    this.autorizacao = localStorage.getItem('jwt_token');
   }
 
   criarHeaderAutorizacao(jwt:string){

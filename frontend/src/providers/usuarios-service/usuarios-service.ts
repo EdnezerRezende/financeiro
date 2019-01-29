@@ -50,8 +50,8 @@ export class UsuariosServiceProvider {
   setUsuarioLogado(usuario: Usuario, jwt:string){
     this.jwtRecebido = jwt;
     this._http.post(this._url+'usuario/usuarioLogado', usuario.email,
-    // {headers: this._headers
-    {headers: {'Authorization': 'Bearer ' + jwt, 'Content-Type': 'application/json;charset=UTF-8', 'Access-Control-Allow-Origin': '*'}
+    {headers: this._headers
+    // {headers: {'Authorization': 'Bearer ' + jwt, 'Content-Type': 'application/json;charset=UTF-8', 'Access-Control-Allow-Origin': '*'}
   })
     .subscribe((usuarioR:Usuario)=> {
       this._usuarioLogado = usuarioR; 
