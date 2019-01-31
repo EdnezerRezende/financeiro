@@ -16,7 +16,7 @@ export class SaidaServiceProvider {
   }
   
   obterSaidas(idConta:number){
-    return this._http.get(this._url + `listaSaidas/conta/${idConta}` , {headers: this._headers});
+    return this._http.get(this._url + `listaSaidas/${idConta}` , {headers: this._headers});
   }
 
   salvarSaida(saidas: Saida[]){
