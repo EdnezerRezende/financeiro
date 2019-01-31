@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { SaidaCadastrarPage } from './saida-cadastrar';
+import { BrMaskerModule } from 'brmasker-ionic-3';
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { SaidaCadastrarPage } from './saida-cadastrar';
   ],
   imports: [
     IonicPageModule.forChild(SaidaCadastrarPage),
+    BrMaskerModule
   ],
   providers: [
     SaidaCadastrarPage

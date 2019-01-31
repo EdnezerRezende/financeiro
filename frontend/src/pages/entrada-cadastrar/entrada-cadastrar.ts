@@ -6,6 +6,7 @@ import { EntradaServiceProvider } from '../../providers/entrada-service/entrada-
 import { finalize } from 'rxjs/operators';
 import { Conta } from '../../modelos/conta';
 import { TabsPage } from '../tabs/tabs';
+import { Origens } from '../../modelos/origens-enum';
 
 @IonicPage()
 @Component({
@@ -15,19 +16,14 @@ import { TabsPage } from '../tabs/tabs';
 export class EntradaCadastrarPage {
   entrada:Entrada = new Entrada();
   private formulario: FormGroup;
-  public origens = [
-    {descricao: 'Pagamento'},
-    {descricao: 'Aluguel'},
-    {descricao: '13º Salário'},
-    {descricao: 'Imposto de Renda'},
-    {descricao: 'Adiantamento de Salário'},
-  ]
-
+  private origens = Origens;
+  private origensConvertido;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController, private formBuilder: FormBuilder,
     private _entradaService: EntradaServiceProvider, private _toastCtrl: ToastController) {
-
       this.inicializarFormulario();
+      this.origensConvertido = Object.keys(this.origens);
   }
 
   inicializarFormulario(){

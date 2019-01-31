@@ -18,6 +18,45 @@
       Por favor, informe a saída.
     </h6>
 
+    <ion-item >
+      <ion-label stacked >Descrição</ion-label>
+      <ion-input [(ngModel)]="saida.descricao" formControlName="descricao" name="descricao"  type="text"></ion-input>
+    </ion-item>
+    
+    <ion-item >
+      <ion-label stacked >Fonte</ion-label>
+      <ion-input [(ngModel)]="saida.fonte" formControlName="fonte" name="fonte"  type="text"></ion-input>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.fonte.valid && (formulario.controls.fonte.dirty || formulario.controls.fonte.touched)">
+      Por favor, informe o nome da fonte. Ex.: Se salário, informar o nome da empresa.
+    </h6>
+
+    <ion-item >
+      <ion-label stacked >Valor</ion-label>
+      <ion-input type="text" [(ngModel)]="saida.valor " [brmasker]="{money: true}" formControlName="valor" name="valor"  type="text"></ion-input>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.valor.valid && (formulario.controls.valor.dirty || formulario.controls.valor.touched)">
+      Por favor, informe o valor recebido.
+    </h6>
+
+    <ion-item>
+      <ion-label stacked >Origem</ion-label>
+      <ion-select [(ngModel)]="saida.origem"  formControlName="origem" [compareWith]="compareFn">
+        <ion-option *ngFor="let origem of origensConvertido" [value]="origem">{{origens[origem] | uppercase}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.origem.valid && (formulario.controls.origem.dirty || formulario.controls.origem.touched)">
+        Por favor, informe a origem do recebimento. Ex.: Se aluguel, informar Aluguel.
+    </h6>
+
+    <ion-item >
+      <ion-label stacked >Data do Débito</ion-label>
+      <ion-datetime  displayFormat="DD/MM/YYYY" doneText="Selecionar" cancelText="Cancelar"  formControlName="dataSaida"  name="dataSaida" [(ngModel)]="saida.dataSaida"></ion-datetime>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.dataSaida.valid && (formulario.controls.dataSaida.dirty || formulario.controls.dataSaida.touched)">
+        Por favor, informe a data do débito.
+    </h6>
+
   </form>
 
   <ion-fab top right edge >

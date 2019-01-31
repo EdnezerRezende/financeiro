@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController, AlertController
 import { Saida } from '../../modelos/saida';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SaidaServiceProvider } from '../../providers/saida-service/saida-service';
+import { Origens } from '../../modelos/origens-enum';
 
 @IonicPage()
 @Component({
@@ -12,11 +13,14 @@ import { SaidaServiceProvider } from '../../providers/saida-service/saida-servic
 export class SaidaCadastrarPage {
   saida: Saida = new Saida();
   private formulario: FormGroup;
+  private origens = Origens;
+  private origensConvertido;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController, private formBuilder: FormBuilder,
     private _saidaService: SaidaServiceProvider, private _toastCtrl: ToastController) {
       this.inicializarFormulario();
+      this.origensConvertido = Object.keys(this.origens);
   }
 
   salvarSaida(){

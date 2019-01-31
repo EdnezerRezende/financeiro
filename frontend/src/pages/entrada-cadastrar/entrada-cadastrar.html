@@ -38,7 +38,7 @@
     <ion-item>
       <ion-label stacked >Origem</ion-label>
       <ion-select [(ngModel)]="entrada.origem"  formControlName="origem" [compareWith]="compareFn">
-        <ion-option *ngFor="let origem of origens"  [value]="origem[1]">{{origem.descricao | uppercase}}</ion-option>
+        <ion-option *ngFor="let origem of origensConvertido" [value]="origem">{{origens[origem] | uppercase}}</ion-option>
       </ion-select>
     </ion-item>
     <h6 class="error" *ngIf="!formulario.controls.origem.valid && (formulario.controls.origem.dirty || formulario.controls.origem.touched)">

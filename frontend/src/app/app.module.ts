@@ -33,7 +33,7 @@ import { TokenStorage } from '../providers/http-rest-service/TokenStorage';
 import { UsuariosServiceProvider } from '../providers/usuarios-service/usuarios-service';
 import { EntradaServiceProvider } from '../providers/entrada-service/entrada-service';
 import { SaidaServiceProvider } from '../providers/saida-service/saida-service';
-
+import { ChartsModule } from 'ng2-charts';
 export function jwtOptionsFactory(storage: Storage) {
   return {
     tokenGetter: () => {return localStorage.getItem('jwt_token');},
@@ -75,11 +75,12 @@ export function jwtOptionsFactory(storage: Storage) {
     HttpClientModule, 
     BrMaskerModule,
     OrderModule,
-    
+    ChartsModule
   ],
   exports:[
     BrMaskerModule,
-    OrderModule
+    OrderModule,
+    ChartsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

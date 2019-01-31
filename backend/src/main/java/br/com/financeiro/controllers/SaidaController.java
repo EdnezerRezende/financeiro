@@ -4,12 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.financeiro.models.Conta;
 import br.com.financeiro.models.Entrada;
@@ -29,6 +24,7 @@ public class SaidaController {
 	@ApiOperation(value = "Lista de Saida por conta ")
 	@GetMapping(value = "/listaSaidas/conta/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)	
 	@RequestMapping(value = "listaSaidas/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@CrossOrigin
 	public List<Saida> obterSaidas(@PathVariable(value = "id") Long idConta) {
 		
         return saidaService.obterListaSaida(idConta);
@@ -37,6 +33,7 @@ public class SaidaController {
 	@ApiOperation(value = "Salvar 1(uma) ou mais Saidas para uma conta ")
 	@GetMapping(value = "/salvarSaidas/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)	
 	@RequestMapping(value = "salvarSaidas/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@CrossOrigin
 	public void salvarSaidas(@PathVariable(value = "id") Long idConta, @RequestBody(required = true) List<Saida> saida) {
 		 
         saidaService.salvarEAtualizar(saida, idConta);
@@ -45,6 +42,7 @@ public class SaidaController {
 	@ApiOperation(value = "Excluir Saida ")
 	@GetMapping(value = "/excluirSaida/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)	
 	@RequestMapping(value = "excluirSaida/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@CrossOrigin
 	public void excluirSaida(@PathVariable(value = "id") Long idSaida) {
 		
 		saidaService.excluirSaida(idSaida);
