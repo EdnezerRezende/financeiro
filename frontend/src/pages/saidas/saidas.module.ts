@@ -9,5 +9,8 @@ import { SaidasPage } from './saidas';
   imports: [
     IonicPageModule.forChild(SaidasPage),
   ],
+  providers:[
+    SaidasPage
+  ]
 })
 export class SaidasPageModule {}

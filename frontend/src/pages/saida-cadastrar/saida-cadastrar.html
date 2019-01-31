@@ -1,18 +1,28 @@
-<!--
-  Generated template for the SaidaCadastrarPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>saida-cadastrar</ion-title>
+    <ion-title>Cadastrar</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <form [formGroup]="formulario">
+    <ion-item >
+      <ion-label stacked >Nome Saida</ion-label>
+      <ion-input [(ngModel)]="saida.nomeSaida" formControlName="nomeSaida" name="nomeSaida"  type="text"></ion-input>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.nomeSaida.valid && (formulario.controls.nomeSaida.dirty || formulario.controls.nomeSaida.touched)">
+      Por favor, informe a saída.
+    </h6>
 
+  </form>
+
+  <ion-fab top right edge >
+    <button ion-fab (click)="salvarSaida()" [disabled]="formulario.invalid">
+      <ion-icon name="send"></ion-icon>
+    </button>
+  </ion-fab> 
 </ion-content>

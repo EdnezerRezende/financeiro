@@ -1,17 +1,33 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpRestServiceProvider } from '../http-rest-service/http-rest-service';
+import { Saida } from '../../modelos/saida';
 
-/*
-  Generated class for the SaidaServiceProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class SaidaServiceProvider {
 
-  constructor(public http: HttpClient) {
-    console.log('Hello SaidaServiceProvider Provider');
+  private _url:string = this._httpRest.getUrl();
+  private _headers:HttpHeaders;
+
+  constructor(public _http: HttpClient, private _httpRest: HttpRestServiceProvider) {
+    this._url = this._httpRest.getUrl();
+    this._headers = this._httpRest.getHeaders();
+  }
+  
+  obterSaidas(idConta:number){
+    return this._http.get(this._url + `listaSaidas/conta/${idConta}` , {headers: this._headers});
+  }
+
+  salvarSaida(saidas: Saida[]){
+    let idConta = 1;
+    return this._http.post(this._url + `salvarSaidas/${idConta}` , 
+                            saidas, {headers: this._headers});
+  }
+
+
+  excluirSaida(idEntrada: number){
+    return this._http.delete(this._url + `excluirSaida/${idEntrada}` ,  {headers: this._headers});
   }
 
 }

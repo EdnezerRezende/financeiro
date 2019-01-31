@@ -9,5 +9,8 @@ import { SaidaCadastrarPage } from './saida-cadastrar';
   imports: [
     IonicPageModule.forChild(SaidaCadastrarPage),
   ],
+  providers: [
+    SaidaCadastrarPage
+  ]
 })
 export class SaidaCadastrarPageModule {}

@@ -8,6 +8,7 @@ import { UsuariosServiceProvider } from '../providers/usuarios-service/usuarios-
 import { AuthProvider } from '../providers/auth/auth';
 import { LoginPage } from '../pages/login/login';
 import { EntradasPage } from '../pages/entradas/entradas';
+import { SaidasPage } from '../pages/saidas/saidas';
 
 @Component({
   selector: 'myapp',
@@ -22,12 +23,14 @@ export class MyApp {
   mostraCadUsuario: boolean;
 
   public paginas = [
-    // {titulo: "Entradas", icone: 'ios-add-circle-outline', mostra: this.mostraCadUsuario, 
-    // subTitulo: { componente: EntradasPage.name, submenu: 'Lista de Entrada', iconeSub: 'ios-add-circle-outline'} },
     {titulo: "Entradas", 
               subTitulo: [{submenu:'Lista Entradas', componente:EntradasPage.name, iconeSub: 'ios-add-circle-outline'
                 }], 
               icone: 'ios-add-circle-outline', mostra: true},
+    {titulo: "Saídas", 
+              subTitulo: [{submenu:'Lista Saídas', componente:SaidasPage.name, iconeSub: 'ios-remove-circle-outline'
+                }], 
+              icone: 'ios-remove-circle-outline', mostra: true},
 
   ];
 
