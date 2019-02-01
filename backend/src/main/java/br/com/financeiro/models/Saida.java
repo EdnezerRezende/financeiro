@@ -1,6 +1,7 @@
 package br.com.financeiro.models;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,7 +32,7 @@ public class Saida  implements Serializable {
 	private Long idSaida;
 	private String nomeSaida;
 	private String descricao;
-	private Long valor;
+	private BigDecimal valor;
 	private String origem;
 	private String dataSaida;
 	private Long qtdParcelas;

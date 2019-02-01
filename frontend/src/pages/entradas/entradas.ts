@@ -73,15 +73,15 @@ export class EntradasPage {
     .subscribe(
       () => {
         loading.dismiss();
-        let entradasTemp: Entrada[] = new Array<Entrada>();
-        this.entradas.forEach(element => {
-          if ( element.idEntrada != entrada.idEntrada){
-              entradasTemp.push(element);
-          }
-        });
-        this.entradas = new Array<Entrada>();
+
+        let entradasTemp: Entrada[] = this.entradas.slice(0);
+
+        let index = entradasTemp.indexOf(entrada);
+        entradasTemp.splice(index, 1);
         this.entradas = entradasTemp;
-        
+
+        this.entradasSearch = this.copiaListaEntradas();
+
         this.calcularVlrEntradas();
 
         let conta:Conta = JSON.parse(localStorage.getItem('conta'));

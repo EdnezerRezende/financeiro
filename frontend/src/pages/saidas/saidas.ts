@@ -36,7 +36,7 @@ export class SaidasPage {
         let conta:Conta = JSON.parse(localStorage.getItem('conta'));
         
         conta.saidas = this.saidas;
-        this.saidasSearch = this.saidas;
+        this.saidasSearch = this.copiaListaSaidas();
 
         localStorage.setItem('conta', JSON.stringify(conta));
 
@@ -58,21 +58,21 @@ export class SaidasPage {
     
   }
 
-  deletarEntrada(saida:Saida){
+  deletarSaida(saida:Saida){
     let loading = this.obterLoading();
     loading.present();
     this._saidaService.excluirSaida(saida.idSaida)
     .subscribe(
       () => {
         loading.dismiss();
-        let saidasTemp: Saida[] = new Array<Saida>();
-        this.saidas.forEach(element => {
-          if ( element.idSaida != saida.idSaida){
-              saidasTemp.push(element);
-          }
-        });
-        this.saidas = new Array<Saida>();
+
+        let saidasTemp: Saida[] = this.saidas.slice(0);
+
+        let index = saidasTemp.indexOf(saida);
+        saidasTemp.splice(index, 1);
         this.saidas = saidasTemp;
+
+        this.saidasSearch = this.copiaListaSaidas();
         
         this.calcularVlrSaidas();
 
@@ -84,7 +84,7 @@ export class SaidasPage {
 
         this._alertCtrl.create({
           title: 'Sucesso',
-          subTitle: 'Entrada Deletada!',
+          subTitle: 'Saída Deletada!',
           buttons: [
             {
               text: 'Ok', 

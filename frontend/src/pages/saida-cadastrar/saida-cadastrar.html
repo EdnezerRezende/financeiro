@@ -2,7 +2,7 @@
 <ion-header>
 
   <ion-navbar class="center">
-    <ion-title>Cadastrar</ion-title>
+    <ion-title>Cadastrar Saída</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -32,8 +32,8 @@
     </h6>
 
     <ion-item >
-      <ion-label stacked >Valor</ion-label>
-      <ion-input type="text" [(ngModel)]="saida.valor " [brmasker]="{money: true}" formControlName="valor" name="valor"  type="text"></ion-input>
+      <ion-label stacked >Valor </ion-label>
+      <ion-input type="text" [(ngModel)]="saida.valor "  [brmasker]="{money: true, thousand: '.',  decimalCaracter: ',', decimal:'2'}" formControlName="valor" name="valor"></ion-input>
     </ion-item>
     <h6 class="error" *ngIf="!formulario.controls.valor.valid && (formulario.controls.valor.dirty || formulario.controls.valor.touched)">
       Por favor, informe o valor recebido.
@@ -55,6 +55,22 @@
     </ion-item>
     <h6 class="error" *ngIf="!formulario.controls.dataSaida.valid && (formulario.controls.dataSaida.dirty || formulario.controls.dataSaida.touched)">
         Por favor, informe a data do débito.
+    </h6>
+
+    <ion-item >
+      <ion-label stacked >É parcelado</ion-label>
+      <ion-checkbox  mode="ios" value="false" checked="true" formControlName="ehParcelado" name="ehParcelado"  [(ngModel)]="saida.ehParcelado" ></ion-checkbox>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.ehParcelado.valid && (formulario.controls.ehParcelado.dirty || formulario.controls.ehParcelado.touched)">
+      Por favor, informe a quantidade de parcelas.
+    </h6>
+
+    <ion-item *ngIf="saida.ehParcelado">
+      <ion-label stacked >Quantidade de Parcelas</ion-label>
+      <ion-input type="number" [(ngModel)]="saida.qtdParcelas " formControlName="qtdParcelas" name="qtdParcelas"  type="text"></ion-input>
+    </ion-item>
+    <h6 class="error" *ngIf="saida.ehParcelado && !formulario.controls.qtdParcelas.valid && (formulario.controls.qtdParcelas.dirty || formulario.controls.qtdParcelas.touched)">
+      Por favor, informe a quantidade de parcelas.
     </h6>
 
   </form>

@@ -34,6 +34,9 @@ import { UsuariosServiceProvider } from '../providers/usuarios-service/usuarios-
 import { EntradaServiceProvider } from '../providers/entrada-service/entrada-service';
 import { SaidaServiceProvider } from '../providers/saida-service/saida-service';
 import { ChartsModule } from 'ng2-charts';
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import { SharedDirectivesModule } from '../diretivas/shared-directives.module';
+
 export function jwtOptionsFactory(storage: Storage) {
   return {
     tokenGetter: () => {return localStorage.getItem('jwt_token');},
@@ -75,12 +78,16 @@ export function jwtOptionsFactory(storage: Storage) {
     HttpClientModule, 
     BrMaskerModule,
     OrderModule,
-    ChartsModule
+    ChartsModule,
+    CurrencyMaskModule,
+    SharedDirectivesModule
   ],
   exports:[
     BrMaskerModule,
     OrderModule,
-    ChartsModule
+    ChartsModule,
+    CurrencyMaskModule,
+    SharedDirectivesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
