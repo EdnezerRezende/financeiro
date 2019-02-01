@@ -29,7 +29,7 @@
 
     <ion-item >
       <ion-label stacked >Valor</ion-label>
-      <ion-input type="text" [(ngModel)]="entrada.valor " [brmasker]="{money: true}" formControlName="valor" name="valor"  type="text"></ion-input>
+      <ion-input type="text" [(ngModel)]="entrada.valor " [brmasker]="{money: true, thousand: '.',  decimalCaracter: ',', decimal:'2'}" formControlName="valor" name="valor"  type="text"></ion-input>
     </ion-item>
     <h6 class="error" *ngIf="!formulario.controls.valor.valid && (formulario.controls.valor.dirty || formulario.controls.valor.touched)">
       Por favor, informe o valor recebido.

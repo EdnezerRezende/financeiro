@@ -1,6 +1,7 @@
 package br.com.financeiro.models;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public class Entrada  implements Serializable {
 	private String nomeEntrada;
 	private String descricao;
 	private String fonte;
-	private Long valor;
+	private BigDecimal valor;
 	private String origem;
 	private String dataEntrada;
 	private Boolean isDeletado;

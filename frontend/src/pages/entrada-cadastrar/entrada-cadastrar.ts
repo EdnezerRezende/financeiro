@@ -48,7 +48,8 @@ export class EntradaCadastrarPage {
     let loading = this.obterLoading();
     loading.present();
     this.entrada.isDeletado = false;
-    this.entrada.valor = parseFloat(this.entrada.valor+'');
+    let valor:string = this.entrada.valor;
+    this.entrada.valor = valor.replace('.', '').replace(',','.');
 
     let entradas: Entrada[] = new Array<Entrada>();
     entradas.push(this.entrada);

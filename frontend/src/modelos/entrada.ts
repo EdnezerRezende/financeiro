@@ -5,7 +5,7 @@ export class Entrada{
     public nomeEntrada: string;
     public descricao: string;
     public fonte:string;
-    public valor: number;
+    public valor: any;
     public origem: string;
     public dataEntrada: string;
     public isDeletado: boolean;
