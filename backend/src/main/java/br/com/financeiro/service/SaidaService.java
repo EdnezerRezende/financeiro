@@ -65,7 +65,7 @@ public class SaidaService {
 
 		boolean grava = true;
 		for(int i = 0; i< referencias.size(); i++){
-			if ( referencias.get(i).getReferencia() == referencia.getReferencia()){
+			if ( referencias.get(i).getReferencia().equals(referencia.getReferencia()) ){
 				grava = false;
 			}
 		}
