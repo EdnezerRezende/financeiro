@@ -33,6 +33,7 @@ public class SaidaService {
 		conta.setSaidas(null);
 		for(Saida saida: saidas) {
 			saida.setConta(conta);
+			saida.isParcelado();
 			saidaRepository.save(saida);
 		};
 	}
