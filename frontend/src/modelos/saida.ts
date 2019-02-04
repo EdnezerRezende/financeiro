@@ -11,6 +11,7 @@ export class Saida{
     public isDeletado: boolean;
     public conta: Conta;
     public isPago: boolean;
+    public isCredito: boolean;
     public qtdParcelas: number;
     public ehParcelado: boolean;
 }

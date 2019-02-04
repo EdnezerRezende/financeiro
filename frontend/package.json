@@ -32,7 +32,7 @@
     "ionic": "^3.20.0",
     "ionic-angular": "3.9.2",
     "ionicons": "4.2.4",
-    "moment": "^2.22.2",
+    "moment": "^2.24.0",
     "ng2-charts": "^1.6.0",
     "ng2-currency-mask": "^5.3.1",
     "ngx-order-pipe": "^2.0.2",

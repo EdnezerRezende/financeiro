@@ -58,6 +58,14 @@
     </h6>
 
     <ion-item >
+      <ion-label stacked >Cartão de Crédito</ion-label>
+      <ion-checkbox  mode="ios" value="false" checked="true" formControlName="isCredito" name="isCredito"  [(ngModel)]="saida.isCredito" ></ion-checkbox>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.isCredito.valid && (formulario.controls.isCredito.dirty || formulario.controls.isCredito.touched)">
+      Por favor, informe se foi pago no cartão de Crédito!
+    </h6>
+
+    <ion-item >
       <ion-label stacked >É parcelado</ion-label>
       <ion-checkbox  mode="ios" value="false" checked="true" formControlName="ehParcelado" name="ehParcelado"  [(ngModel)]="saida.ehParcelado" ></ion-checkbox>
     </ion-item>

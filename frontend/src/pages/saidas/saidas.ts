@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams, AlertController, LoadingController
 import { Saida } from '../../modelos/saida';
 import { SaidaServiceProvider } from '../../providers/saida-service/saida-service';
 import { Conta } from '../../modelos/conta';
+import { ReferenciaServiceProvider } from '../../providers/referencia-service/referencia-service';
+import { Referencia } from '../../modelos/referencia';
+import * as moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -13,11 +16,40 @@ export class SaidasPage {
   saidas:Saida[];
   saidasSearch: Saida[] = new Array<Saida>();
   totalSaidas: number = 0;
+  referenciaSelecionado: String;
+  referencias: Referencia[];
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private _loadingCtrl: LoadingController,
-    private _alertCtrl: AlertController, private _saidaService: SaidaServiceProvider) {
+    private _alertCtrl: AlertController, private _saidaService: SaidaServiceProvider,
+    private _referenciaService: ReferenciaServiceProvider) {
+      this.obterReferencias();
+
       this.obterSaidas();
   }
 
+  obterReferencias(){
+    let loading = this.obterLoading();
+    loading.present();
+    let conta: Conta =  JSON.parse(localStorage.getItem('conta'));
+    
+    this._referenciaService.obterReferencias(conta.idConta)
+    .subscribe((referencias: Referencia[]) => {
+      loading.dismiss();
+      this.referencias = referencias;
+    },
+    (err) => {
+      loading.dismiss();
+      this._alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Não foi possível obter referencias',
+        buttons: [
+          {
+            text: 'Ok'
+          }
+        ]
+      }).present();
+    })
+  }
 
   obterSaidas(){
     let loading = this.obterLoading();
@@ -134,10 +166,28 @@ export class SaidasPage {
     }
   }
 
+  selecionarReferencia(referencia:string){
+
+    if (referencia != undefined){
+      let saidasTemp: Saida[] = new Array<Saida>();
+      this.saidas.forEach(element => {
+        let dataRefe = moment(element.dataSaida, 'MM/yyyy');
+        if (moment(referencia).diff(dataRefe)){
+          saidasTemp.push(element);
+        }
+      });
+      
+      this.saidasSearch = saidasTemp;
+    }
+  }
+
   obterLoading(){
     return this._loadingCtrl.create({
       content: 'Carregando...'
     });
   }
  
+  compareRefencia(e1, e2): boolean {
+    return e1 === e2;
+  }
 }

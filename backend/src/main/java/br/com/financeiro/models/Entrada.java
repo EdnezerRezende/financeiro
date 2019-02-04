@@ -41,7 +41,7 @@ public class Entrada  implements Serializable {
     inverseJoinColumns = {@JoinColumn(name = "conta_id", referencedColumnName = "idConta")})
 	private Conta conta;
 
-	public Entrada(String nomeEntrada, String descricao, String fonte, Long valor, String origem, String dataEntrada,
+	public Entrada(String nomeEntrada, String descricao, String fonte, BigDecimal valor, String origem, String dataEntrada,
 			Conta conta, Boolean deletado) {
 		super();
 		this.nomeEntrada = nomeEntrada;

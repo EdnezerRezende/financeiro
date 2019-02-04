@@ -3,9 +3,9 @@ import { IonicPage, NavController, NavParams, LoadingController, AlertController
 import { Saida } from '../../modelos/saida';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SaidaServiceProvider } from '../../providers/saida-service/saida-service';
-import { Origens } from '../../modelos/origens-enum';
 import { Conta } from '../../modelos/conta';
 import { TabsPage } from '../tabs/tabs';
+import { OrigensDebitos } from '../../modelos/origens-debitos-enum';
 
 @IonicPage()
 @Component({
@@ -15,7 +15,7 @@ import { TabsPage } from '../tabs/tabs';
 export class SaidaCadastrarPage {
   saida: Saida = new Saida();
   private formulario: FormGroup;
-  private origens = Origens;
+  private origens = OrigensDebitos;
   private origensConvertido;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private _loadingCtrl: LoadingController,
@@ -107,6 +107,7 @@ export class SaidaCadastrarPage {
       dataSaida: ['', Validators.required],
       qtdParcelas: [''],
       ehParcelado: [''],
+      isCredito: [''],
     });
   }
 
