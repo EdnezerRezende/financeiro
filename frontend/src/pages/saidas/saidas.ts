@@ -35,7 +35,18 @@ export class SaidasPage {
     this._referenciaService.obterReferencias(conta.idConta)
     .subscribe((referencias: Referencia[]) => {
       loading.dismiss();
-      this.referencias = referencias;
+      this.referencias = referencias.sort( (n1,n2) => {
+        if (n1.referencia > n2.referencia) {
+            return 1;
+        }
+    
+        if (n1.referencia < n2.referencia) {
+            return -1;
+        }
+    
+        return 0;
+
+      })
     },
     (err) => {
       loading.dismiss();
@@ -63,13 +74,13 @@ export class SaidasPage {
         
         this.saidas = saidas;
         
-        this.calcularVlrSaidas();
-
+        
         let conta:Conta = JSON.parse(localStorage.getItem('conta'));
         
         conta.saidas = this.saidas;
         this.saidasSearch = this.copiaListaSaidas();
-
+        this.calcularVlrSaidas();
+        
         localStorage.setItem('conta', JSON.stringify(conta));
 
       },
@@ -143,7 +154,7 @@ export class SaidasPage {
 
   private calcularVlrSaidas() {
     this.totalSaidas = 0;
-    this.saidas.forEach(element => {
+    this.saidasSearch.forEach(element => {
       this.totalSaidas += element.valor;
     });
     this.totalSaidas;
@@ -166,18 +177,19 @@ export class SaidasPage {
     }
   }
 
-  selecionarReferencia(referencia:string){
-
+  selecionarReferencia(referencia:any){
     if (referencia != undefined){
       let saidasTemp: Saida[] = new Array<Saida>();
       this.saidas.forEach(element => {
-        let dataRefe = moment(element.dataSaida, 'MM/yyyy');
-        if (moment(referencia).diff(dataRefe)){
+        let dataRefe = moment(element.dataSaida).subtract(1,'months').format('MM/YYYY');
+        // if (moment(referencia.referencia).isSame(dataRefe)){
+        if (referencia.referencia  === dataRefe){
           saidasTemp.push(element);
         }
       });
-      
       this.saidasSearch = saidasTemp;
+      this.calcularVlrSaidas();      
+
     }
   }
 
@@ -187,7 +199,9 @@ export class SaidasPage {
     });
   }
  
-  compareRefencia(e1, e2): boolean {
-    return e1 === e2;
+  compareRefencia(e1, e2) {
+    // this.selecionarReferencia(e1.referencia);
+    return e1.referencia === e2.referencia;
+    
   }
 }

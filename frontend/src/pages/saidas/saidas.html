@@ -9,13 +9,13 @@
 
 
 <ion-content padding>
-  <ion-searchbar animated=true placeholder="Pesquisar " (ionInput)="getItems($event)"></ion-searchbar>
   <ion-item>
     <ion-label stacked >Referências</ion-label>
-    <ion-select [(ngModel)]="referenciaSelecionado" ionChange="selecionarReferencia(referencia.referencia)" [compareWith]="compareRefencia">
+    <ion-select [(ngModel)]="referenciaSelecionado" (ionChange)="selecionarReferencia($event)" [compareWith]="compareRefencia">
       <ion-option *ngFor="let referencia of referencias" [value]="referencia">{{referencia.referencia}}</ion-option>
     </ion-select>
   </ion-item>
+  <ion-searchbar animated=true placeholder="Pesquisar " (ionInput)="getItems($event)"></ion-searchbar>
   <ion-list sliding="true" >
     <ion-item detail-push  *ngFor="let saida of saidasSearch">
       <h2><label>Nome da saída: </label>{{saida.nomeSaida | uppercase}}</h2>

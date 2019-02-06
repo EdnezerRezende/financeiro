@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import br.com.financeiro.models.Referencias;
 import br.com.financeiro.repository.ReferenciasRepository;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,14 +43,20 @@ public class SaidaService {
 		for(Saida saida: saidas) {
 			saida.setConta(conta);
 			if ( saida.getEhParcelado() ) {
+				LocalDate dataRecebida = saida.getDataSaida();
 				for ( int i = 0; i < saida.getQtdParcelas(); i++){
-					saida.getDataSaida().plus(30, ChronoUnit.DAYS);
-					gravarReferencia(saida);
-					saidaRepository.save(saida);
+					Saida saidaTemp = new Saida(saida);
+
+					saidaTemp.setDataSaida(dataRecebida.plus(30, ChronoUnit.DAYS));
+
+					dataRecebida = saidaTemp.getDataSaida();
+
+					gravarReferencia(saidaTemp);
+					saidaRepository.save(saidaTemp);
 				}
 			}else {
 				if ( saida.getIsCredito()){
-					saida.getDataSaida().plus(30, ChronoUnit.DAYS);
+					saida.setDataSaida(saida.getDataSaida().plus(30, ChronoUnit.DAYS));
 				}
 				gravarReferencia(saida);
 				saidaRepository.save(saida);
@@ -67,6 +74,7 @@ public class SaidaService {
 		for(int i = 0; i< referencias.size(); i++){
 			if ( referencias.get(i).getReferencia().equals(referencia.getReferencia()) ){
 				grava = false;
+				break;
 			}
 		}
 		if ( grava){

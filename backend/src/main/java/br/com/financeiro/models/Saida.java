@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 public class Saida  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -47,4 +47,22 @@ public class Saida  implements Serializable {
 	@JoinTable(name = "conta_saidas", joinColumns = {@JoinColumn(name = "saida_id", referencedColumnName = "idSaida")},
     inverseJoinColumns = {@JoinColumn(name = "conta_id", referencedColumnName = "idConta")})
 	private Conta conta;
+
+	public Saida(){
+
+	}
+    public Saida(Saida saida) {
+    	this.dataSaida = saida.getDataSaida();
+		this.descricao = saida.getDescricao();
+		this.conta = saida.getConta();
+		this.ehParcelado = saida.getEhParcelado();
+		this.isCredito = saida.getIsCredito();
+		this.nomeSaida = saida.getNomeSaida();
+		this.valor = saida.getValor();
+		this.origem = saida.getOrigem();
+		this.qtdParcelas = saida.getQtdParcelas();
+		this.isDeletado = saida.getIsDeletado();
+		this.isPago = saida.getIsPago();
+
+    }
 }
