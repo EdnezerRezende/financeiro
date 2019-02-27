@@ -22,6 +22,7 @@ export class SaidaCadastrarPage {
     private _alertCtrl: AlertController, private formBuilder: FormBuilder,
     private _saidaService: SaidaServiceProvider, private _toastCtrl: ToastController) {
       this.saida.ehParcelado = false;
+      this.saida.isCredito = false;
       this.saida.qtdParcelas = 0;
       this.inicializarFormulario();
       this.origensConvertido = Object.keys(this.origens);
@@ -38,10 +39,8 @@ export class SaidaCadastrarPage {
     let loading = this.obterLoading();
     loading.present();
     this.saida.isDeletado = false;
-    console.log(this.saida);
     let valor:string = this.saida.valor;
     this.saida.valor = valor.replace('.', '').replace(',','.');
-    // this.saida.valor = parseFloat(this.saida.valor+'');
     this.saida.valor = Number(this.saida.valor);
     let saidas: Saida[] = new Array<Saida>();
     saidas.push(this.saida);

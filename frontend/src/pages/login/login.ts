@@ -48,7 +48,7 @@ export class LoginPage {
       message = error.error;
     }
     else {
-      message = `error + error.error`;
+      message = `error ` + error.error;
     }
 
     const toast = this._toastCtrl.create({

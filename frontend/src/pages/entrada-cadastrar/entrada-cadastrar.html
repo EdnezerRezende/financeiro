@@ -2,6 +2,11 @@
   <ion-navbar class="center">
     <ion-title >Cadastar Entrada</ion-title>
   </ion-navbar>
+  <ion-fab top right edge mini style="top: 30px !important; right: 16px;">
+    <button ion-fab (click)="salvarEntrada()" [disabled]="formulario.invalid">
+      <ion-icon name="send"></ion-icon>
+    </button>
+  </ion-fab> 
 </ion-header>
 
 <ion-content padding>
@@ -54,9 +59,5 @@
     </h6>
 
   </form>
-  <ion-fab top right edge >
-    <button ion-fab (click)="salvarEntrada()" [disabled]="formulario.invalid">
-      <ion-icon name="send"></ion-icon>
-    </button>
-  </ion-fab> 
+  
 </ion-content>

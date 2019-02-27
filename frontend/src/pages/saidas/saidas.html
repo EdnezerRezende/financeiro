@@ -4,21 +4,22 @@
   <ion-navbar>
     <ion-title>Listas da saida</ion-title>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
   <ion-item>
     <ion-label stacked >Referências</ion-label>
     <ion-select [(ngModel)]="referenciaSelecionado" (ionChange)="selecionarReferencia($event)" [compareWith]="compareRefencia">
+      <ion-option  [value]="Todas">Todas</ion-option>
       <ion-option *ngFor="let referencia of referencias" [value]="referencia">{{referencia.referencia}}</ion-option>
     </ion-select>
   </ion-item>
-  <ion-searchbar animated=true placeholder="Pesquisar " (ionInput)="getItems($event)"></ion-searchbar>
+  <div *ngIf="referenciaSelecionado == undefined || referenciaSelecionado == 'Todas'">
+    <ion-searchbar animated=true placeholder="Pesquisar " (ionInput)="getItems($event)" [disabled]="(referenciaSelecionado != undefined && referenciaSelecionado != 'Todas') || referenciaSelecionado != 'Todas'"></ion-searchbar>
+  </div>
   <ion-list sliding="true" >
     <ion-item detail-push  *ngFor="let saida of saidasSearch">
-      <h2><label>Nome da saída: </label>{{saida.nomeSaida | uppercase}}</h2>
+      <h2><label>Nome: </label>{{saida.nomeSaida | uppercase}}</h2>
       <h4><label>Descrição: </label>{{saida.descricao | uppercase}}</h4>
       <h4><label>Fonte: </label>{{saida.fonte | uppercase}}</h4>
       <h4><label>Valor: </label>{{saida.valor | currency:'R$ ' }} </h4>

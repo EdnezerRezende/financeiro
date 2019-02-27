@@ -6,6 +6,7 @@ import { Conta } from '../../modelos/conta';
 import { ReferenciaServiceProvider } from '../../providers/referencia-service/referencia-service';
 import { Referencia } from '../../modelos/referencia';
 import * as moment from 'moment';
+import { TabsPage } from '../tabs/tabs';
 
 @IonicPage()
 @Component({
@@ -39,13 +40,22 @@ export class SaidasPage {
         if (n1.referencia > n2.referencia) {
             return 1;
         }
-    
         if (n1.referencia < n2.referencia) {
             return -1;
         }
-    
         return 0;
+      })
 
+      this.referencias = referencias.sort( (n1,n2) => {
+        let ano1 = n1.referencia.substring(3,8);
+        let ano2 = n2.referencia.substring(3,8);
+        if (ano1 > ano2) {
+          return 1;
+        }
+        if (ano1 < ano2) {
+            return -1;
+        }
+        return 0;
       })
     },
     (err) => {
@@ -73,10 +83,8 @@ export class SaidasPage {
         loading.dismiss();
         
         this.saidas = saidas;
-        
-        
         let conta:Conta = JSON.parse(localStorage.getItem('conta'));
-        
+
         conta.saidas = this.saidas;
         this.saidasSearch = this.copiaListaSaidas();
         this.calcularVlrSaidas();
@@ -101,41 +109,54 @@ export class SaidasPage {
     
   }
 
+  
   deletarSaida(saida:Saida){
     let loading = this.obterLoading();
     loading.present();
+
+    this._alertCtrl.create({
+      title: 'Alerta',
+      subTitle: 'Deseja realmente deletar o registro " ' + saida.nomeSaida +' " ? ',
+      buttons: [
+        {
+          text: 'Sim', 
+          handler: ()=> {
+            this.efetivarDelecaoRegistro(saida, loading);
+          }
+        },
+        { text: 'Não', 
+          handler: ()=>{
+            loading.dismiss();
+          } 
+        }
+      ]
+    }).present();
+  }
+
+
+  private efetivarDelecaoRegistro(saida: Saida, loading) {
     this._saidaService.excluirSaida(saida.idSaida)
-    .subscribe(
-      () => {
+      .subscribe(() => {
         loading.dismiss();
-
         let saidasTemp: Saida[] = this.saidas.slice(0);
-
         let index = saidasTemp.indexOf(saida);
         saidasTemp.splice(index, 1);
         this.saidas = saidasTemp;
-
         this.saidasSearch = this.copiaListaSaidas();
-        
         this.calcularVlrSaidas();
-
-        let conta:Conta = JSON.parse(localStorage.getItem('conta'));
-        
+        let conta: Conta = JSON.parse(localStorage.getItem('conta'));
         conta.saidas = this.saidas;
-
         localStorage.setItem('conta', JSON.stringify(conta));
-
         this._alertCtrl.create({
           title: 'Sucesso',
           subTitle: 'Saída Deletada!',
           buttons: [
             {
-              text: 'Ok', 
+              text: 'Ok',
             }
           ]
         }).present();
-      },
-    (err) => {
+      }, (err) => {
         console.log(err);
         loading.dismiss();
         this._alertCtrl.create({
@@ -147,10 +168,8 @@ export class SaidasPage {
             }
           ]
         }).present();
-      }
-    );
+      });
   }
-
 
   private calcularVlrSaidas() {
     this.totalSaidas = 0;
@@ -174,11 +193,12 @@ export class SaidasPage {
         return (item.nomeSaida.toLowerCase().indexOf(val.toLowerCase()) > -1 
         );
       })
+      this.calcularVlrSaidas();
     }
   }
 
   selecionarReferencia(referencia:any){
-    if (referencia != undefined){
+    if (referencia != undefined && referencia != 'Todas'){
       let saidasTemp: Saida[] = new Array<Saida>();
       this.saidas.forEach(element => {
         let dataRefe = moment(element.dataSaida).subtract(1,'months').format('MM/YYYY');
@@ -190,6 +210,9 @@ export class SaidasPage {
       this.saidasSearch = saidasTemp;
       this.calcularVlrSaidas();      
 
+    } else{
+      this.saidasSearch = this.saidas;
+      this.calcularVlrSaidas();   
     }
   }
 

@@ -37,9 +37,12 @@ public class SaidaService {
 	}
 	
 	public void salvarEAtualizar(List<Saida> saidas, Long idConta) {
-		Conta conta = contaRepository.getOne(idConta);
-		conta.setEntradas(null);
-		conta.setSaidas(null);
+//        Conta conta = contaRepository.getOne(idConta);
+        Conta conta = new Conta();
+        conta.setIdConta(idConta);
+//        conta.setEntradas(null);
+//		conta.setSaidas(null);
+//		conta.setUsuarios(null);
 		for(Saida saida: saidas) {
 			saida.setConta(conta);
 			if ( saida.getEhParcelado() ) {
