@@ -28,9 +28,8 @@ public class EntradaService {
 	}
 	
 	public void salvarEAtualizar(List<Entrada> entradas, Long idConta) {
-		Conta conta = contaRepository.getOne(idConta);
-		conta.setEntradas(null);
-		conta.setSaidas(null);
+		Conta conta = new Conta();
+		conta.setIdConta(idConta);
 		for(Entrada entrada: entradas) {
 			entrada.setConta(conta);
 			entradaRepository.save(entrada);
