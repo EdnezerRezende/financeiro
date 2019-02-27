@@ -6,7 +6,6 @@ import { Conta } from '../../modelos/conta';
 import { ReferenciaServiceProvider } from '../../providers/referencia-service/referencia-service';
 import { Referencia } from '../../modelos/referencia';
 import * as moment from 'moment';
-import { TabsPage } from '../tabs/tabs';
 
 @IonicPage()
 @Component({
@@ -105,10 +104,7 @@ export class SaidasPage {
         }).present();
       }
     );
-
-    
   }
-
   
   deletarSaida(saida:Saida){
     let loading = this.obterLoading();
@@ -209,7 +205,6 @@ export class SaidasPage {
       });
       this.saidasSearch = saidasTemp;
       this.calcularVlrSaidas();      
-
     } else{
       this.saidasSearch = this.saidas;
       this.calcularVlrSaidas();   
