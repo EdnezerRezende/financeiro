@@ -40,7 +40,10 @@ export class SaidaCadastrarPage {
     loading.present();
     this.saida.isDeletado = false;
     let valor:string = this.saida.valor;
-    this.saida.valor = valor.replace('.', '').replace(',','.');
+    if ( Number(this.saida.valor) === NaN ){
+      this.saida.valor = valor.replace('.', '').replace(',','.');
+    }
+    // this.saida.valor = parseFloat(this.saida.valor+'');
     this.saida.valor = Number(this.saida.valor);
     let saidas: Saida[] = new Array<Saida>();
     saidas.push(this.saida);

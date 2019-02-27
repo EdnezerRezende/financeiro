@@ -37,12 +37,8 @@ public class SaidaService {
 	}
 	
 	public void salvarEAtualizar(List<Saida> saidas, Long idConta) {
-//        Conta conta = contaRepository.getOne(idConta);
         Conta conta = new Conta();
         conta.setIdConta(idConta);
-//        conta.setEntradas(null);
-//		conta.setSaidas(null);
-//		conta.setUsuarios(null);
 		for(Saida saida: saidas) {
 			saida.setConta(conta);
 			if ( saida.getEhParcelado() ) {
@@ -56,6 +52,7 @@ public class SaidaService {
 
 					gravarReferencia(saidaTemp);
 					saidaRepository.save(saidaTemp);
+					saidaRepository.flush();
 				}
 			}else {
 				if ( saida.getIsCredito()){
@@ -74,7 +71,7 @@ public class SaidaService {
 		referencia.setReferencia(saida.getDataSaida().format(DateTimeFormatter.ofPattern("MM/yyyy")));
 
 		boolean grava = true;
-		for(int i = 0; i< referencias.size(); i++){
+		for(int i = 0; i < referencias.size(); i++){
 			if ( referencias.get(i).getReferencia().equals(referencia.getReferencia()) ){
 				grava = false;
 				break;
@@ -82,6 +79,7 @@ public class SaidaService {
 		}
 		if ( grava){
 			referenciasRepository.save(referencia);
+			referenciasRepository.flush();
 		}
 	}
 
