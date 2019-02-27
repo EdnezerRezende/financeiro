@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams, AlertController, LoadingController
 import { Entrada } from '../../modelos/entrada';
 import { Conta } from '../../modelos/conta';
 import { EntradaServiceProvider } from '../../providers/entrada-service/entrada-service';
+import { Referencia } from '../../modelos/referencia';
+import { ReferenciaServiceProvider } from '../../providers/referencia-service/referencia-service';
+import * as moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -13,10 +16,58 @@ export class EntradasPage {
   entradas:Entrada[];
   entradasSearch: Entrada[] = new Array<Entrada>();
   totalEntradas: number = 0;
+  referenciaSelecionado: String;
+  referencias: Referencia[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private _loadingCtrl: LoadingController,
-    private _alertCtrl: AlertController, private _entradaService: EntradaServiceProvider) {
+    private _alertCtrl: AlertController, private _entradaService: EntradaServiceProvider,
+    private _referenciaService: ReferenciaServiceProvider) {
+      this.obterReferencias();
       this.obterEntradas();
+  }
+
+  obterReferencias(){
+    let loading = this.obterLoading();
+    loading.present();
+    let conta: Conta =  JSON.parse(localStorage.getItem('conta'));
+    
+    this._referenciaService.obterReferencias(conta.idConta)
+    .subscribe((referencias: Referencia[]) => {
+      loading.dismiss();
+      this.referencias = referencias.sort( (n1,n2) => {
+        if (n1.referencia > n2.referencia) {
+            return 1;
+        }
+        if (n1.referencia < n2.referencia) {
+            return -1;
+        }
+        return 0;
+      })
+
+      this.referencias = referencias.sort( (n1,n2) => {
+        let ano1 = n1.referencia.substring(3,8);
+        let ano2 = n2.referencia.substring(3,8);
+        if (ano1 > ano2) {
+          return 1;
+        }
+        if (ano1 < ano2) {
+            return -1;
+        }
+        return 0;
+      })
+    },
+    (err) => {
+      loading.dismiss();
+      this._alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Não foi possível obter referencias',
+        buttons: [
+          {
+            text: 'Ok'
+          }
+        ]
+      }).present();
+    })
   }
 
   obterEntradas(){
@@ -129,6 +180,26 @@ export class EntradasPage {
         return (item.nomeEntrada.toLowerCase().indexOf(val.toLowerCase()) > -1 
         );
       })
+      this.calcularVlrEntradas();
+    }
+  }
+
+  selecionarReferencia(referencia:any){
+    if (referencia != undefined && referencia != 'Todas'){
+      let entradasTemp: Entrada[] = new Array<Entrada>();
+      this.entradas.forEach(element => {
+        let dataRefe = moment(element.dataEntrada).subtract(1,'months').format('MM/YYYY');
+        // if (moment(referencia.referencia).isSame(dataRefe)){
+        if (referencia.referencia  === dataRefe){
+          entradasTemp.push(element);
+        }
+      });
+      this.entradasSearch = entradasTemp;
+      this.calcularVlrEntradas();      
+
+    } else{
+      this.entradasSearch = this.entradas;
+      this.calcularVlrEntradas();   
     }
   }
 
@@ -136,5 +207,10 @@ export class EntradasPage {
     return this._loadingCtrl.create({
       content: 'Carregando...'
     });
+  }
+
+  compareRefencia(e1, e2) {
+    return e1.referencia === e2.referencia;
+    
   }
 }

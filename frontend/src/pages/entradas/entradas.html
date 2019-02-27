@@ -8,14 +8,21 @@
 
 
 <ion-content padding>
+    <ion-item>
+      <ion-label stacked >Referências</ion-label>
+      <ion-select [(ngModel)]="referenciaSelecionado" (ionChange)="selecionarReferencia($event)" [compareWith]="compareRefencia">
+        <ion-option  [value]="Todas">Todas</ion-option>
+        <ion-option *ngFor="let referencia of referencias" [value]="referencia">{{referencia.referencia}}</ion-option>
+      </ion-select>
+    </ion-item>
     <ion-searchbar animated=true placeholder="Pesquisar " (ionInput)="getItems($event)"></ion-searchbar>
     <ion-list sliding="true" >
       <ion-item detail-push  *ngFor="let entrada of entradasSearch">
-        <h2><label>Nome da Entrada: </label>{{entrada.nomeEntrada | uppercase}}</h2>
+        <h2><label>Nome: </label>{{entrada.nomeEntrada | uppercase}}</h2>
         <h4><label>Descrição: </label>{{entrada.descricao | uppercase}}</h4>
         <h4><label>Fonte: </label>{{entrada.fonte | uppercase}}</h4>
         <h4><label>Valor: </label>{{entrada.valor | currency:'R$ ' }} </h4>
-        <h4><label>Data Entrada: </label>{{entrada.dataEntrada | date: 'dd/MM/yyyy'}}</h4>
+        <h4><label>Data: </label>{{entrada.dataEntrada | date: 'dd/MM/yyyy'}}</h4>
         <ion-icon (click)="deletarEntrada(entrada)" item-right isActive="true" name="md-trash"></ion-icon>
       </ion-item>
     </ion-list>

@@ -223,7 +223,6 @@ export class SaidasPage {
   }
  
   compareRefencia(e1, e2) {
-    // this.selecionarReferencia(e1.referencia);
     return e1.referencia === e2.referencia;
     
   }
