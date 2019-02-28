@@ -16,4 +16,9 @@ public class Datas {
 
         return hoje;
     }
+
+    public static LocalDate converterReferenciaDataStringFormatada(String referencia){
+        LocalDate dataInicio = LocalDate.of(Integer.parseInt(referencia.substring(2,6)), Integer.parseInt(referencia.substring(0,2)), 01);
+        return dataInicio;
+    }
 }

@@ -19,6 +19,10 @@ export class SaidaServiceProvider {
     return this._http.get(this._url + `listaSaidas/${idConta}` , {headers: this._headers});
   }
 
+  obterSaidasPorReferencia(idConta:number, referencia:string){
+    return this._http.get(this._url + `listaSaidas/${idConta}/referencia/${referencia}` , {headers: this._headers});
+  }
+
   salvarSaida(saidas: Saida[]){
     let idConta = 1;
     return this._http.post(this._url + `salvarSaidas/${idConta}` , 

@@ -29,6 +29,15 @@ public class SaidaController {
 		
         return saidaService.obterListaSaida(idConta);
     }
+
+	@ApiOperation(value = "Lista de Saida por conta e referencia ")
+	@GetMapping(value = "/listaSaidas/conta/{id}/referencia/{referencia}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "listaSaidas/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@CrossOrigin
+	public List<Saida> obterSaidasPorReferencia(@PathVariable(value = "id") Long idConta,  @PathVariable(value = "referencia") String referencia) {
+
+		return saidaService.obterListaEntradaReferencia(idConta, referencia);
+	}
 	
 	@ApiOperation(value = "Salvar 1(uma) ou mais Saidas para uma conta ")
 	@GetMapping(value = "/salvarSaidas/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)	

@@ -27,7 +27,16 @@ public class EntradaController {
 		
         return entradaService.obterListaEntrada(idConta.longValue());
     }
-	
+
+	@ApiOperation(value = "Lista de Entradas por conta e referência ")
+	@GetMapping(value = "/listaEntradas/conta/{id}/referencia/{referencia}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "listaEntradas/conta/{id}/referencia/{referencia}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@CrossOrigin
+	public List<Entrada> obterEntradasReferencia(@PathVariable(value = "id") Integer idConta, @PathVariable(value = "referencia") String referencia) {
+
+		return entradaService.obterListaEntradaReferencia(idConta.longValue(),referencia );
+	}
+
 	@ApiOperation(value = "Salvar 1(uma) ou mais Entradas para uma conta ")
 	@GetMapping(value = "/salvarEntradas/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)	
 	@RequestMapping(value = "salvarEntradas/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

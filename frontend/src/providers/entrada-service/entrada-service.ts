@@ -36,9 +36,14 @@ export class EntradaServiceProvider {
     return this._http.post(this._url + `salvarEntradas/${idConta}` , 
                             entradas, {headers: this._headers});
   }
+  
 
   obterEntradas(idConta:number){
     return this._http.get(this._url + `listaEntradas/conta/${idConta}` , {headers: this._headers});
+  }
+  
+  obterEntradasPorReferencia(idConta:number, referencia:string){
+    return this._http.get(this._url + `listaEntradas/conta/${idConta}/referencia/${referencia}` , {headers: this._headers});
   }
 
   excluirEntrada(idEntrada: number){

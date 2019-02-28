@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import br.com.financeiro.models.Referencias;
 import br.com.financeiro.repository.ReferenciasRepository;
+import br.com.financeiro.util.Datas;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,18 @@ public class SaidaService {
 	public List<Saida> obterListaSaida(Long idConta){
 		return saidaRepository.findAllByContaIdContaAndIsDeletadoFalse(idConta);
 	}
-	
+
+	public List<Saida> obterListaEntradaReferencia(Long idConta, String referencia){
+
+		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+		LocalDate dataInicio = Datas.converterReferenciaDataStringFormatada(referencia);
+
+		LocalDate dataFim = dataInicio.plusDays(30);
+
+		return saidaRepository.findAllByContaIdContaAndIsDeletadoFalseAndDataEntradaBetween(idConta,dataInicio.format(formato),dataFim.format(formato) );
+	}
+
 	public void salvarEAtualizar(List<Saida> saidas, Long idConta) {
         Conta conta = new Conta();
         conta.setIdConta(idConta);

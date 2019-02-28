@@ -8,11 +8,20 @@
 
 
 <ion-content padding>
+
+  <ion-item>
+    <ion-label stacked >Referências</ion-label>
+    <ion-select [(ngModel)]="referenciaSelecionado" (ionChange)="selecionarReferencia($event)" [compareWith]="compareRefencia">
+      <ion-option selected [value]="Todas">Todas</ion-option>
+      <ion-option *ngFor="let referencia of referencias" [value]="referencia">{{referencia.referencia}}</ion-option>
+    </ion-select>
+  </ion-item>
+  
   <div style="display: block">
     <canvas baseChart
-                [data]="doughnutChartData"
-                [labels]="doughnutChartLabels"
-                [chartType]="doughnutChartType"
+                [data]="dados"
+                [labels]="colunas"
+                [chartType]="tipoGrafico"
                 (chartHover)="chartHovered($event)"
                 (chartClick)="chartClicked($event)"></canvas>
   </div>

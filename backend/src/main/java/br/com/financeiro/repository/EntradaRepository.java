@@ -1,5 +1,6 @@
 package br.com.financeiro.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +12,6 @@ import br.com.financeiro.models.Entrada;
 public interface EntradaRepository extends JpaRepository<Entrada, Long> {
 	
 	List<Entrada> findAllByContaIdContaAndIsDeletadoFalse(Long idConta);
-	
+
+	List<Entrada> findAllByContaIdContaAndIsDeletadoFalseAndDataEntradaBetween(Long conta_idConta, String dataEntrada, String dataFim);
 }
