@@ -133,6 +133,12 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
+		<!--MasterCard-->
+		<dependency>
+			<groupId>com.mastercard.api</groupId>
+			<artifactId>maws</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 
 		<!-- dependencias email -->
 		<dependency>

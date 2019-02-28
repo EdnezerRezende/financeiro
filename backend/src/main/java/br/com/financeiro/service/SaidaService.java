@@ -37,7 +37,7 @@ public class SaidaService {
 		return saidaRepository.findAllByContaIdContaAndIsDeletadoFalse(idConta);
 	}
 
-	public List<Saida> obterListaEntradaReferencia(Long idConta, String referencia){
+	public List<Saida> obterListaSaidaReferencia(Long idConta, String referencia){
 
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
@@ -45,7 +45,7 @@ public class SaidaService {
 
 		LocalDate dataFim = dataInicio.plusDays(30);
 
-		return saidaRepository.findAllByContaIdContaAndIsDeletadoFalseAndDataEntradaBetween(idConta,dataInicio.format(formato),dataFim.format(formato) );
+		return saidaRepository.findAllByContaIdContaAndIsDeletadoFalseAndDataSaidaBetween(idConta,dataInicio.format(formato),dataFim.format(formato) );
 	}
 
 	public void salvarEAtualizar(List<Saida> saidas, Long idConta) {

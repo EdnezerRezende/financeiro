@@ -13,5 +13,5 @@ public interface SaidaRepository extends JpaRepository<Saida, Long> {
 
 	List<Saida> findAllByContaIdContaAndIsDeletadoFalse(Long idConta);
 
-	List<Saida> findAllByContaIdContaAndIsDeletadoFalseAndDataEntradaBetween(Long conta_idConta, String dataEntrada, String dataFim);
+	List<Saida> findAllByContaIdContaAndIsDeletadoFalseAndDataSaidaBetween(Long conta_idConta, String dataEntrada, String dataFim);
 }

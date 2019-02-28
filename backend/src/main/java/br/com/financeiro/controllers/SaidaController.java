@@ -36,7 +36,7 @@ public class SaidaController {
 	@CrossOrigin
 	public List<Saida> obterSaidasPorReferencia(@PathVariable(value = "id") Long idConta,  @PathVariable(value = "referencia") String referencia) {
 
-		return saidaService.obterListaEntradaReferencia(idConta, referencia);
+		return saidaService.obterListaSaidaReferencia(idConta, referencia);
 	}
 	
 	@ApiOperation(value = "Salvar 1(uma) ou mais Saidas para uma conta ")
