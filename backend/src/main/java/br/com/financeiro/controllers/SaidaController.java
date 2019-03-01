@@ -23,7 +23,7 @@ public class SaidaController {
 	
 	@ApiOperation(value = "Lista de Saida por conta ")
 	@GetMapping(value = "/listaSaidas/conta/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)	
-	@RequestMapping(value = "listaSaidas/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/listaSaidas/conta/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@CrossOrigin
 	public List<Saida> obterSaidas(@PathVariable(value = "id") Long idConta) {
 		
@@ -32,7 +32,7 @@ public class SaidaController {
 
 	@ApiOperation(value = "Lista de Saida por conta e referencia ")
 	@GetMapping(value = "/listaSaidas/conta/{id}/referencia/{referencia}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@RequestMapping(value = "listaSaidas/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/listaSaidas/conta/{id}/referencia/{referencia}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@CrossOrigin
 	public List<Saida> obterSaidasPorReferencia(@PathVariable(value = "id") Long idConta,  @PathVariable(value = "referencia") String referencia) {
 

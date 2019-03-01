@@ -32,11 +32,10 @@ public class EntradaService {
 	}
 
 	public List<Entrada> obterListaEntradaReferencia(Long idConta, String referencia){
-		DateTimeFormatter  formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate dataInicio = Datas.converterReferenciaDataStringFormatada(referencia);
 		LocalDate dataFim = dataInicio.plusDays(30);
 
-		return entradaRepository.findAllByContaIdContaAndIsDeletadoFalseAndDataEntradaBetween(idConta,dataInicio.format(formato),dataFim.format(formato) );
+		return entradaRepository.findAllByContaIdContaAndIsDeletadoFalseAndDataEntradaBetween(idConta,dataInicio,dataFim );
 	}
 
 
