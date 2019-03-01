@@ -16,11 +16,11 @@ export class SaidaServiceProvider {
   }
   
   obterSaidas(idConta:number){
-    return this._http.get(this._url + `listaSaidas/${idConta}` , {headers: this._headers});
+    return this._http.get(this._url + `listaSaidas/conta/${idConta}` , {headers: this._headers});
   }
 
   obterSaidasPorReferencia(idConta:number, referencia:string){
-    return this._http.get(this._url + `listaSaidas/${idConta}/referencia/${referencia}` , {headers: this._headers});
+    return this._http.get(this._url + `listaSaidas/conta/${idConta}/referencia/${referencia}` , {headers: this._headers});
   }
 
   salvarSaida(saidas: Saida[]){

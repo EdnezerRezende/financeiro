@@ -13,5 +13,5 @@ public interface EntradaRepository extends JpaRepository<Entrada, Long> {
 	
 	List<Entrada> findAllByContaIdContaAndIsDeletadoFalse(Long idConta);
 
-	List<Entrada> findAllByContaIdContaAndIsDeletadoFalseAndDataEntradaBetween(Long conta_idConta, LocalDate dataEntrada, LocalDate dataFim);
+	List<Entrada> findAllByContaIdContaAndIsDeletadoFalseAndDataEntradaBetween(Long conta_idConta, String dataEntrada, String dataFim);
 }

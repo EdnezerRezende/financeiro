@@ -15,16 +15,19 @@ import { Saida } from '../../modelos/saida';
 })
 export class DashboardPage {
 
+  valorTotalEntrada:number = 0;
+  valorTotalSaida:number = 0;
+
   public colunas:string[] = ['Entradas', 'Saídas'];
-  public dados:number[] = [];
+  public dados:Number[] = [this.valorTotalEntrada, this.valorTotalSaida];
   public tipoGrafico:string = 'doughnut';
 
-  referenciaSelecionado: string;
+  referenciaSelecionado: Referencia;
   referencias: Referencia[];
-
 
   entradas:Entrada[];
   saidas:Saida[];
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private _loadingCtrl: LoadingController,
@@ -34,7 +37,10 @@ export class DashboardPage {
       this.entradas = new Array<Entrada>();
       this.saidas = new Array<Saida>();
       this.obterReferencias();
-      this.obterEntradas();
+      // this.obterEntradas();
+      setTimeout(()=>{
+        this.calcularValores();
+      });
   }
 
   selecionarReferencia(referencia:any){
@@ -43,15 +49,35 @@ export class DashboardPage {
     let conta: Conta =  JSON.parse(localStorage.getItem('conta'));
     this.obterEntradasPorReferencia(conta, loading);
     this.obterSaidasPorReferencia(conta, loading);
+    setTimeout(()=>{
+      this.calcularValores();
+    });
   }
 
+  calcularValores(){
+    this.valorTotalEntrada = 0;
+    this.valorTotalSaida = 0;
+    
+    this.entradas.forEach(entrada => {
+      this.valorTotalEntrada += entrada.valor;
+    });
+
+    this.saidas.forEach(saida=>{
+      this.valorTotalSaida += saida.valor;
+    });
+
+    this.dados = new Array<Number>();
+    this.dados.push(this.valorTotalEntrada);
+    this.dados.push(this.valorTotalSaida);
+
+  }
   private obterEntradasPorReferencia(conta: Conta, loading) {
-    this._entradaService.obterEntradasPorReferencia(conta.idConta, this.referenciaSelecionado)
+    let ref = this.referenciaSelecionado.referencia.replace('/', '');
+    this._entradaService.obterEntradasPorReferencia(conta.idConta, ref)
       .subscribe((entrada: Entrada[]) => {
-        loading.dismiss();
         this.entradas = entrada;
       }, (err) => {
-        loading.dismiss();
+        // loading.dismiss();
         this._alertCtrl.create({
           title: 'Error',
           subTitle: 'Não foi possível obter Entradas',
@@ -65,10 +91,11 @@ export class DashboardPage {
   }
 
   private obterSaidasPorReferencia(conta: Conta, loading) {
-    this._saidaService.obterSaidasPorReferencia(conta.idConta, this.referenciaSelecionado)
-      .subscribe((entrada: Entrada[]) => {
+    let ref = this.referenciaSelecionado.referencia.replace('/', '');
+    this._saidaService.obterSaidasPorReferencia(conta.idConta, ref)
+      .subscribe((saidas: Saida[]) => {
         loading.dismiss();
-        this.entradas = entrada;
+        this.saidas = saidas;
       }, (err) => {
         loading.dismiss();
         this._alertCtrl.create({
