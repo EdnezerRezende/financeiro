@@ -47,17 +47,23 @@ export class DashboardPage {
     let loading = this.obterLoading();
     loading.present();
     let conta: Conta =  JSON.parse(localStorage.getItem('conta'));
-    this.obterEntradasPorReferencia(conta, loading);
-    this.obterSaidasPorReferencia(conta, loading);
+    
+    let ref:string = "Todas";
+    if (this.referenciaSelecionado.referencia != undefined ){
+      ref = this.referenciaSelecionado.referencia.replace('/', '');
+    }
+
+    this.obterEntradasPorReferencia(conta, loading, ref);
+    this.obterSaidasPorReferencia(conta, loading, ref);
     setTimeout(()=>{
       this.calcularValores();
-    });
+    }, 1000);
   }
 
   calcularValores(){
     this.valorTotalEntrada = 0;
     this.valorTotalSaida = 0;
-    
+
     this.entradas.forEach(entrada => {
       this.valorTotalEntrada += entrada.valor;
     });
@@ -71,8 +77,8 @@ export class DashboardPage {
     this.dados.push(this.valorTotalSaida);
 
   }
-  private obterEntradasPorReferencia(conta: Conta, loading) {
-    let ref = this.referenciaSelecionado.referencia.replace('/', '');
+  private obterEntradasPorReferencia(conta: Conta, loading, ref:string) {
+    
     this._entradaService.obterEntradasPorReferencia(conta.idConta, ref)
       .subscribe((entrada: Entrada[]) => {
         this.entradas = entrada;
@@ -90,8 +96,7 @@ export class DashboardPage {
       });
   }
 
-  private obterSaidasPorReferencia(conta: Conta, loading) {
-    let ref = this.referenciaSelecionado.referencia.replace('/', '');
+  private obterSaidasPorReferencia(conta: Conta, loading, ref:string) {
     this._saidaService.obterSaidasPorReferencia(conta.idConta, ref)
       .subscribe((saidas: Saida[]) => {
         loading.dismiss();

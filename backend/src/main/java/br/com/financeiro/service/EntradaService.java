@@ -8,6 +8,10 @@ import java.util.Optional;
 import javax.swing.text.DateFormatter;
 import javax.transaction.Transactional;
 
+import br.com.financeiro.models.Referencias;
+import br.com.financeiro.models.Saida;
+import br.com.financeiro.repository.ReferenciasRepository;
+import br.com.financeiro.repository.SaidaRepository;
 import br.com.financeiro.util.Datas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,18 +29,22 @@ public class EntradaService {
 	private EntradaRepository entradaRepository;
 	
 	@Autowired
-	private ContaRepository contaRepository;
-	
+	private ReferenciasService referenciasService;
+
 	public List<Entrada> obterListaEntrada(Long idConta){
 		return entradaRepository.findAllByContaIdContaAndIsDeletadoFalse(idConta);
 	}
 
 	public List<Entrada> obterListaEntradaReferencia(Long idConta, String referencia){
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		LocalDate dataInicio = Datas.converterReferenciaDataStringFormatada(referencia);
-		LocalDate dataFim = dataInicio.plusDays(30);
+		if ( !referencia.equals("Todas")){
+			LocalDate dataInicio = Datas.converterReferenciaDataStringFormatada(referencia);
+			LocalDate dataFim = dataInicio.plusDays(30);
 
-		return entradaRepository.findAllByContaIdContaAndIsDeletadoFalseAndDataEntradaBetween(idConta,dataInicio.format(formato),dataFim.format(formato) );
+			return entradaRepository.findAllByContaIdContaAndIsDeletadoFalseAndDataEntradaBetween(idConta,dataInicio.toString(),dataFim.toString() );
+		}else{
+			return obterListaEntrada(idConta);
+		}
 	}
 
 
@@ -54,7 +62,16 @@ public class EntradaService {
 	public void excluirEntrada(Long idEntrada) {
 		Entrada entrada = entradaRepository.getOne(idEntrada);
 		entrada.setIsDeletado(true);
+		Conta conta = new Conta();
+		conta.setIdConta(entrada.getConta().getIdConta());
 		entradaRepository.save(entrada);
+
+		Long idConta = entrada.getConta().getIdConta();
+		String dataRecebida = entrada.getDataEntrada().substring(0,7).replace("-", "");
+		String referencia = dataRecebida.substring(4,6).concat(dataRecebida.substring(0,4));
+		referenciasService.verificarDeletarReferencia(idConta, referencia);
 	}
-	
+
+
+
 }

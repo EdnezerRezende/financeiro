@@ -38,21 +38,24 @@ public class SaidaService {
 
 	@Autowired
 	private ReferenciasRepository referenciasRepository;
-	
+
 	@Autowired
-	private ContaRepository contaRepository;
+	private ReferenciasService referenciasService;
 	
 	public List<Saida> obterListaSaida(Long idConta){
 		return saidaRepository.findAllByContaIdContaAndIsDeletadoFalse(idConta);
 	}
 
 	public List<Saida> obterListaSaidaReferencia(Long idConta, String referencia){
+		if ( !referencia.equals("Todas")) {
+			LocalDate dataInicio = Datas.converterReferenciaDataStringFormatada(referencia);
 
-		LocalDate dataInicio = Datas.converterReferenciaDataStringFormatada(referencia);
+			LocalDate dataFim = dataInicio.plusDays(30);
 
-		LocalDate dataFim = dataInicio.plusDays(30);
-
-		return saidaRepository.findAllByContaIdContaAndIsDeletadoFalseAndDataSaidaBetween(idConta,dataInicio,dataFim );
+			return saidaRepository.findAllByContaIdContaAndIsDeletadoFalseAndDataSaidaBetween(idConta, dataInicio, dataFim);
+		}else{
+			return obterListaSaida(idConta);
+		}
 	}
 
 	public void salvarEAtualizar(List<Saida> saidas, Long idConta) {
@@ -105,7 +108,19 @@ public class SaidaService {
 	public void excluirSaida(Long idSaida) {
 		Saida saida = saidaRepository.getOne(idSaida);
 		saida.setIsDeletado(true);
+		Conta conta = new Conta();
+		conta.setIdConta(saida.getConta().getIdConta());
+		saida.setConta(conta);
 		saidaRepository.save(saida);
+
+		verificarReferencia(saida);
+	}
+
+	public void verificarReferencia(Saida saida) {
+		Long idConta = saida.getConta().getIdConta();
+		String dataRecebida = saida.getDataSaida().toString();
+		String referencia = dataRecebida.substring(5,7).concat(dataRecebida.substring(0,4));
+		referenciasService.verificarDeletarReferencia(idConta, referencia);
 	}
 
 

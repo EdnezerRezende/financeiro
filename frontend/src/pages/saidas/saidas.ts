@@ -134,15 +134,21 @@ export class SaidasPage {
     this._saidaService.excluirSaida(saida.idSaida)
       .subscribe(() => {
         loading.dismiss();
+        
         let saidasTemp: Saida[] = this.saidas.slice(0);
         let index = saidasTemp.indexOf(saida);
         saidasTemp.splice(index, 1);
         this.saidas = saidasTemp;
         this.saidasSearch = this.copiaListaSaidas();
+        
         this.calcularVlrSaidas();
+        
         let conta: Conta = JSON.parse(localStorage.getItem('conta'));
         conta.saidas = this.saidas;
         localStorage.setItem('conta', JSON.stringify(conta));
+
+        this.obterReferencias();
+
         this._alertCtrl.create({
           title: 'Sucesso',
           subTitle: 'Saída Deletada!',

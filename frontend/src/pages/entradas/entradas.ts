@@ -120,51 +120,62 @@ export class EntradasPage {
   deletarEntrada(entrada:Entrada){
     let loading = this.obterLoading();
     loading.present();
+
+    this._alertCtrl.create({
+      title: 'Alerta',
+      subTitle: 'Deseja realmente deletar o registro " ' + entrada.nomeEntrada +' " ? ',
+      buttons: [
+        {
+          text: 'Sim', 
+          handler: ()=> {
+            this.deletarRegistro(entrada, loading);
+          }
+        },
+        { text: 'Não', 
+          handler: ()=>{
+            loading.dismiss();
+          } 
+        }
+      ]
+    }).present();
+  }
+
+  private deletarRegistro(entrada: Entrada, loading) {
     this._entradaService.excluirEntrada(entrada.idEntrada)
-    .subscribe(
-      () => {
+      .subscribe(() => {
         loading.dismiss();
-
         let entradasTemp: Entrada[] = this.entradas.slice(0);
-
         let index = entradasTemp.indexOf(entrada);
         entradasTemp.splice(index, 1);
         this.entradas = entradasTemp;
-
         this.entradasSearch = this.copiaListaEntradas();
-
         this.calcularVlrEntradas();
-
-        let conta:Conta = JSON.parse(localStorage.getItem('conta'));
-        
+        let conta: Conta = JSON.parse(localStorage.getItem('conta'));
         conta.entradas = this.entradas;
-
         localStorage.setItem('conta', JSON.stringify(conta));
-
+        this.obterReferencias();
         this._alertCtrl.create({
           title: 'Sucesso',
           subTitle: 'Entrada Deletada!',
           buttons: [
             {
-              text: 'Ok', 
+              text: 'Ok',
             }
           ]
         }).present();
-      },
-    (err) => {
+      }, (err) => {
         console.log(err);
         loading.dismiss();
         this._alertCtrl.create({
           title: 'Error',
-          subTitle: 'Registro não deletado',//err.error.message,
+          subTitle: 'Registro não deletado',
           buttons: [
             {
               text: 'Ok'
             }
           ]
         }).present();
-      }
-    );
+      });
   }
 
   copiaListaEntradas(){
