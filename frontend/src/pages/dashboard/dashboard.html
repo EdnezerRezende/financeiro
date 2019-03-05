@@ -25,4 +25,17 @@
                 (chartHover)="chartHovered($event)"
                 (chartClick)="chartClicked($event)"></canvas>
   </div>
+<br/>
+<br/>
+  <div >
+    <canvas baseChart
+            [datasets]="dadosReferencia"
+            [labels]="barChartReferencias"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+  </div>
+
 </ion-content>

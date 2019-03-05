@@ -68,7 +68,7 @@ public class SaidaService {
 				for ( int i = 0; i < saida.getQtdParcelas(); i++){
 					Saida saidaTemp = new Saida(saida);
 
-					saidaTemp.setDataSaida(dataRecebida.plus(30, ChronoUnit.DAYS));
+					saidaTemp.setDataSaida(dataRecebida.plus(1, ChronoUnit.MONTHS));
 
 					dataRecebida = saidaTemp.getDataSaida();
 

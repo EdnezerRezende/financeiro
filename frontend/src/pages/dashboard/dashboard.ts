@@ -7,6 +7,7 @@ import { Entrada } from '../../modelos/entrada';
 import { Referencia } from '../../modelos/referencia';
 import { SaidaServiceProvider } from '../../providers/saida-service/saida-service';
 import { Saida } from '../../modelos/saida';
+import * as moment from 'moment';  
 
 @IonicPage()
 @Component({
@@ -17,10 +18,22 @@ export class DashboardPage {
 
   valorTotalEntrada:number = 0;
   valorTotalSaida:number = 0;
-
+  
+  // Grafico pizza
   public colunas:string[] = ['Entradas', 'Saídas'];
   public dados:Number[] = [this.valorTotalEntrada, this.valorTotalSaida];
   public tipoGrafico:string = 'doughnut';
+
+  // Grafico em barras
+  public barChartOptions:any = {
+    scaleShowVerticalLines: false,
+    responsive: true
+  };
+  public barChartReferencias:string[] = [];
+  public dadosReferencia:any[] = [{data: [],label:'Entrada'},{data: [],label:'Saída'}];
+  public barChartType:string = 'bar';
+  public barChartLegend:boolean = true;
+
 
   referenciaSelecionado: Referencia;
   referencias: Referencia[];
@@ -36,11 +49,16 @@ export class DashboardPage {
     private _referenciaService: ReferenciaServiceProvider) {
       this.entradas = new Array<Entrada>();
       this.saidas = new Array<Saida>();
-      this.obterReferencias();
-      // this.obterEntradas();
-      setTimeout(()=>{
-        this.calcularValores();
-      });
+      this.referencias = new Array<Referencia>();
+
+     
+  }
+
+  ionViewWillEnter(){
+    this.referenciaSelecionado = new Referencia();
+    this.referenciaSelecionado.referencia = 'Todas';
+    this.obterReferencias();
+    this.selecionarReferencia(undefined);
   }
 
   selecionarReferencia(referencia:any){
@@ -49,8 +67,20 @@ export class DashboardPage {
     let conta: Conta =  JSON.parse(localStorage.getItem('conta'));
     
     let ref:string = "Todas";
-    if (this.referenciaSelecionado.referencia != undefined ){
+    
+    if (this.referenciaSelecionado != undefined && this.referenciaSelecionado.referencia != undefined 
+      && this.referenciaSelecionado.referencia != 'Todas' ){
+        this.barChartReferencias = new Array<string>();
+        this.barChartReferencias.push(this.referenciaSelecionado.referencia);
       ref = this.referenciaSelecionado.referencia.replace('/', '');
+    }
+    else{
+      this.barChartReferencias = new Array<string>();
+      if ( this.referencias.length != 0){
+        this.referencias.forEach(referencia => {
+          this.barChartReferencias.push(referencia.referencia);
+        });
+      }
     }
 
     this.obterEntradasPorReferencia(conta, loading, ref);
@@ -65,17 +95,58 @@ export class DashboardPage {
     this.valorTotalSaida = 0;
 
     this.entradas.forEach(entrada => {
+      let ref = entrada.dataEntrada;
+      console.log(ref);
+      if ( entrada.dataEntrada)
       this.valorTotalEntrada += entrada.valor;
     });
-
+    
     this.saidas.forEach(saida=>{
       this.valorTotalSaida += saida.valor;
     });
+    
+    let valorSaida:number[] = [];
+    let valorEntrada:number[]= [];
+    if (this.referenciaSelecionado != undefined && this.referenciaSelecionado.referencia != undefined 
+      && this.referenciaSelecionado.referencia != 'Todas' ){
+      this.dadosReferencia= [
+        {data: [this.valorTotalEntrada], label: 'Entrada'},
+        {data: [this.valorTotalSaida], label: 'Saída'}
+      ];
+    }else{
+      this.referencias.forEach(referencia => {
+        let vlrEntrada = 0;
+        let vlrSaida = 0;
+
+        this.entradas.forEach(entrada => {
+          let ref = moment(entrada.dataEntrada).format('MM/YYYY');
+          if ( ref == referencia.referencia ){
+            vlrEntrada += Number(entrada.valor);
+          }
+        });
+        this.saidas.forEach(saida => {
+          let ref = moment(saida.dataSaida).subtract(1,'months').format('MM/YYYY');
+          if ( ref == referencia.referencia){
+            vlrSaida += Number(saida.valor);
+          }
+        });
+
+        valorSaida.push(vlrSaida);
+        valorEntrada.push(vlrEntrada);
+      });
+      
+      this.dadosReferencia = [{data:valorEntrada, label: 'Entrada'}, 
+                              {data:valorSaida, label: 'Saída'}
+      ];
+    }
+    
+    
+    
 
     this.dados = new Array<Number>();
     this.dados.push(this.valorTotalEntrada);
     this.dados.push(this.valorTotalSaida);
-
+    console.log("Sai no calcular");
   }
   private obterEntradasPorReferencia(conta: Conta, loading, ref:string) {
     
@@ -143,7 +214,11 @@ export class DashboardPage {
             return -1;
         }
         return 0;
-      })
+      });
+      this.barChartReferencias = new Array<string>();
+      this.referencias.forEach(referencia => {
+        this.barChartReferencias.push(referencia.referencia);
+      });
     },
     (err) => {
       loading.dismiss();
