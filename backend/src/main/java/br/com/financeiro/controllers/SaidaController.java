@@ -47,6 +47,16 @@ public class SaidaController {
 		 
         saidaService.salvarEAtualizar(saida, idConta);
     }
+
+	@ApiOperation(value = "Pagar uma saída(dívida)")
+	@GetMapping(value = "/pagarSaida/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "pagarSaida/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@CrossOrigin
+	public void pagarSaida(@PathVariable(value = "id") Long idSaida) {
+
+		saidaService.pagar(idSaida);
+	}
+
 	
 	@ApiOperation(value = "Excluir Saida ")
 	@GetMapping(value = "/excluirSaida/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)	

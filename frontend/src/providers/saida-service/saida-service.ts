@@ -23,6 +23,14 @@ export class SaidaServiceProvider {
     return this._http.get(this._url + `listaSaidas/conta/${idConta}/referencia/${referencia}` , {headers: this._headers});
   }
 
+  obterContasAVencer(idConta:number){
+    return this._http.get(this._url + `listaContasAVencer/conta/${idConta}` , {headers: this._headers});
+  }
+
+  pagarSaida(idSaida:number){
+    return this._http.post(this._url + `pagarSaida/${idSaida}` , {headers: this._headers});
+  }
+
   salvarSaida(saidas: Saida[]){
     let idConta = 1;
     return this._http.post(this._url + `salvarSaidas/${idConta}` , 

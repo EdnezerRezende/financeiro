@@ -13,4 +13,14 @@
 
 <ion-content padding>
   <p>Bem vindo ao sistema financeiro!</p>
+  <ion-list sliding="true" *ngIf="listaSaidas.length > 0" >
+    <p class="center uppercase">Contas a vencer</p>
+    <ion-item detail-push  *ngFor="let saida of listaSaidas" style="background-color: darkslategrey">
+      <h2><label>Nome: </label>{{saida.nomeSaida | uppercase}}</h2>
+      <!-- <h4><label>Descrição: </label>{{saida.descricao | uppercase}}</h4> -->
+      <!-- <h4><label>Fonte: </label>{{saida.fonte | uppercase}}</h4> -->
+      <h4><label>Valor: </label>{{saida.valor | currency:'R$ ' }} </h4>
+      <h4><label>Data para pagar: </label>{{saida.dataSaida | date: 'dd/MM/yyyy'}}</h4>
+    </ion-item>
+  </ion-list>
 </ion-content>

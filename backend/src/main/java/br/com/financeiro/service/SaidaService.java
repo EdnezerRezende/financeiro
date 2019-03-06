@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -43,7 +44,7 @@ public class SaidaService {
 	private ReferenciasService referenciasService;
 	
 	public List<Saida> obterListaSaida(Long idConta){
-		return saidaRepository.findAllByContaIdContaAndIsDeletadoFalse(idConta);
+		return saidaRepository.findAllByContaIdContaAndIsDeletadoFalseAndIsPagoFalse(idConta);
 	}
 
 	public List<Saida> obterListaSaidaReferencia(Long idConta, String referencia){
@@ -63,6 +64,7 @@ public class SaidaService {
         conta.setIdConta(idConta);
 		for(Saida saida: saidas) {
 			saida.setConta(conta);
+			saida.setIsPago(false);
 			if ( saida.getEhParcelado() ) {
 				LocalDate dataRecebida = saida.getDataSaida();
 				for ( int i = 0; i < saida.getQtdParcelas(); i++){
@@ -84,6 +86,13 @@ public class SaidaService {
 				saidaRepository.save(saida);
 			}
 		};
+	}
+
+	public void pagar(Long idSaida) {
+		Saida saida = saidaRepository.getOne(idSaida);
+		saida.setIsPago(true);
+		saidaRepository.save(saida);
+
 	}
 
 	private void gravarReferencia(Saida saida) {

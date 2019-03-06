@@ -105,6 +105,29 @@ export class SaidasPage {
       }
     );
   }
+
+  pagarSaida(saida:Saida){
+    let loading = this.obterLoading();
+    loading.present();
+
+    this._alertCtrl.create({
+      title: 'Alerta',
+      subTitle: 'O registro " ' + saida.nomeSaida +' " será pago, confirma ? ',
+      buttons: [
+        {
+          text: 'Sim', 
+          handler: ()=> {
+            this.efetivarPagamento(saida, loading);
+          }
+        },
+        { text: 'Não', 
+          handler: ()=>{
+            loading.dismiss();
+          } 
+        }
+      ]
+    }).present();
+  }
   
   deletarSaida(saida:Saida){
     let loading = this.obterLoading();
@@ -127,6 +150,35 @@ export class SaidasPage {
         }
       ]
     }).present();
+  }
+
+  private efetivarPagamento(saida: Saida, loading) {
+    this._saidaService.pagarSaida(saida.idSaida)
+      .subscribe(() => {
+        loading.dismiss();
+        
+        this._alertCtrl.create({
+          title: 'Sucesso',
+          subTitle: 'Conta Paga com sucesso!',
+          buttons: [
+            {
+              text: 'Ok',
+            }
+          ]
+        }).present();
+      }, (err) => {
+        console.log(err);
+        loading.dismiss();
+        this._alertCtrl.create({
+          title: 'Error',
+          subTitle: 'Registro não pago',
+          buttons: [
+            {
+              text: 'Ok'
+            }
+          ]
+        }).present();
+      });
   }
 
 

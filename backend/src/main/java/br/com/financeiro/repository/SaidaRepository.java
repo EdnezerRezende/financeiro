@@ -12,7 +12,7 @@ import br.com.financeiro.models.Saida;
 @Repository
 public interface SaidaRepository extends JpaRepository<Saida, Long> {
 
-	List<Saida> findAllByContaIdContaAndIsDeletadoFalse(Long idConta);
+	List<Saida> findAllByContaIdContaAndIsDeletadoFalseAndIsPagoFalse(Long idConta);
 
 	List<Saida> findAllByContaIdContaAndIsDeletadoFalseAndDataSaidaBetween(Long conta_idConta, LocalDate dataEntrada, LocalDate dataFim);
 }
