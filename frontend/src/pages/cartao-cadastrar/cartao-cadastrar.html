@@ -1,0 +1,58 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Cadastrar Cartão</ion-title>
+  </ion-navbar>
+
+  <ion-fab top right edge mini style="top: 30px !important; right: 16px;">
+    <button ion-fab (click)="salvarCartao()" [disabled]="formulario.invalid">
+      <ion-icon name="send"></ion-icon>
+    </button>
+  </ion-fab> 
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="formulario">
+    <ion-item >
+      <ion-label stacked >Bandeira do cartão</ion-label>
+      <ion-select [(ngModel)]="cartao.bandeira"  formControlName="bandeira" [compareWith]="compareFn">
+        <ion-option [value]="Mastercard">MasterCard</ion-option>
+        <ion-option [value]="visa">Visa</ion-option>
+      </ion-select>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.bandeira.valid && (formulario.controls.bandeira.dirty || formulario.controls.bandeira.touched)">
+      Por favor, informe a bandeira do cartão.
+    </h6>
+    
+    <ion-item >
+      <ion-label stacked >Descrição</ion-label>
+      <ion-input [(ngModel)]="cartao.descricao" formControlName="descricao" name="descricao"  type="text"></ion-input>
+    </ion-item>
+    
+    <ion-item >
+      <ion-label stacked >Número do Cartão</ion-label>
+      <ion-input [(ngModel)]="cartao.numeroCartao" [brmasker]="{mask:'0000 0000 0000 0000', len:19, type:'num'}" formControlName="numeroCartao" name="numeroCartao"  type="text"></ion-input>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.numeroCartao.valid && (formulario.controls.numeroCartao.dirty || formulario.controls.numeroCartao.touched)">
+      Por favor, informe o número do cartão.
+    </h6>
+
+    <ion-item >
+      <ion-label stacked >Banco</ion-label>
+      <ion-input [(ngModel)]="cartao.banco" formControlName="banco" name="banco"  type="text"></ion-input>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.banco.valid && (formulario.controls.banco.dirty || formulario.controls.banco.touched)">
+      Por favor, informe o banco emissor.
+    </h6>
+
+    <ion-item >
+      <ion-label stacked >Data de vencimento</ion-label>
+      <ion-datetime  displayFormat="DD/MM/YYYY" doneText="Selecionar" cancelText="Cancelar"  formControlName="dataVencimento"  name="dataVencimento" [(ngModel)]="cartao.dataVencimento"></ion-datetime>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.dataVencimento.valid && (formulario.controls.dataVencimento.dirty || formulario.controls.dataVencimento.touched)">
+        Por favor, informe a data de vencimento.
+    </h6>
+
+  </form>
+</ion-content>

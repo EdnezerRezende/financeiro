@@ -39,6 +39,10 @@ public class Conta implements Serializable {
 	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
 	private List<Saida> saidas;
 
+	@OneToMany(mappedBy = "conta", cascade = javax.persistence.CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
+	private List<Cartao> cartoes;
+
 	@OneToMany
 	@JoinTable(name = "usuario_conta", joinColumns = {@JoinColumn(name = "conta_id", referencedColumnName = "idConta")},
     inverseJoinColumns = {@JoinColumn(name = "usuario_id", referencedColumnName = "id")})

@@ -9,6 +9,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { LoginPage } from '../pages/login/login';
 import { EntradasPage } from '../pages/entradas/entradas';
 import { SaidasPage } from '../pages/saidas/saidas';
+import { CartaoCadastrarPage } from '../pages/cartao-cadastrar/cartao-cadastrar';
 
 @Component({
   selector: 'myapp',
@@ -23,6 +24,10 @@ export class MyApp {
   mostraCadUsuario: boolean;
 
   public paginas = [
+    {titulo: "Cartão", 
+              subTitulo: [{submenu:'Cadastrar Cartão', componente: CartaoCadastrarPage.name, iconeSub: 'card'
+                }], 
+              icone: 'card', mostra: true},
     {titulo: "Entradas", 
               subTitulo: [{submenu:'Lista Entradas', componente:EntradasPage.name, iconeSub: 'ios-add-circle-outline'
                 }], 
@@ -31,7 +36,6 @@ export class MyApp {
               subTitulo: [{submenu:'Lista Saídas', componente:SaidasPage.name, iconeSub: 'ios-remove-circle-outline'
                 }], 
               icone: 'ios-remove-circle-outline', mostra: true},
-
   ];
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public menu: MenuController, app: App,

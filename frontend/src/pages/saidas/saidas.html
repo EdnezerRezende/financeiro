@@ -24,7 +24,7 @@
       <h4><label>Fonte: </label>{{saida.fonte | uppercase}}</h4>
       <h4><label>Valor: </label>{{saida.valor | currency:'R$ ' }} </h4>
       <h4><label>Data saída: </label>{{saida.dataSaida | date: 'dd/MM/yyyy'}}</h4>
-      <ion-icon (click)="pagarSaida(saida)" item-right isActive="true" name="md-send"></ion-icon>
+      <ion-icon (click)="pagarSaida(saida)" item-right isActive="true" name="md-cash"></ion-icon>
       <ion-icon (click)="deletarSaida(saida)" item-right isActive="true" name="md-trash"></ion-icon>
     </ion-item>
   </ion-list>
