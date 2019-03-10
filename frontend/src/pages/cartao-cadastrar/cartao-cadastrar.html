@@ -48,7 +48,11 @@
 
     <ion-item >
       <ion-label stacked >Data de vencimento</ion-label>
-      <ion-datetime  displayFormat="DD/MM/YYYY" doneText="Selecionar" cancelText="Cancelar"  formControlName="dataVencimento"  name="dataVencimento" [(ngModel)]="cartao.dataVencimento"></ion-datetime>
+      <ion-input [(ngModel)]="cartao.dataVencimento" formControlName="dataVencimento" name="dataVencimento"  
+      type="text"></ion-input>
+      <!-- <ion-datetime  displayFormat="DD/MM/YYYY" 
+      doneText="Selecionar" cancelText="Cancelar"  formControlName="dataVencimento" 
+       name="dataVencimento" [(ngModel)]="cartao.dataVencimento"></ion-datetime> -->
     </ion-item>
     <h6 class="error" *ngIf="!formulario.controls.dataVencimento.valid && (formulario.controls.dataVencimento.dirty || formulario.controls.dataVencimento.touched)">
         Por favor, informe a data de vencimento.

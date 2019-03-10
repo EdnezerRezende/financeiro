@@ -33,7 +33,7 @@ public class Cartao implements Serializable {
 
 	private String banco;
 
-	private LocalDate dataVencimento;
+	private Long diaVencimento;
 
 	@OneToMany(mappedBy = "cartao", cascade = javax.persistence.CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
