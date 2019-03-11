@@ -17,7 +17,7 @@
     <ion-item >
       <ion-label stacked >Bandeira do cartão</ion-label>
       <ion-select [(ngModel)]="cartao.bandeira"  formControlName="bandeira" [compareWith]="compareFn">
-        <ion-option [value]="Mastercard">MasterCard</ion-option>
+        <ion-option [value]="mastercard">MasterCard</ion-option>
         <ion-option [value]="visa">Visa</ion-option>
       </ion-select>
     </ion-item>
@@ -55,7 +55,7 @@
        name="dataVencimento" [(ngModel)]="cartao.dataVencimento"></ion-datetime> -->
     </ion-item>
     <h6 class="error" *ngIf="!formulario.controls.dataVencimento.valid && (formulario.controls.dataVencimento.dirty || formulario.controls.dataVencimento.touched)">
-        Por favor, informe a data de vencimento.
+        Por favor, informe o dia de vencimento.
     </h6>
 
   </form>

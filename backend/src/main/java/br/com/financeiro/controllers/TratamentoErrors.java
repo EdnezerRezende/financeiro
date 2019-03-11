@@ -1,5 +1,6 @@
 package br.com.financeiro.controllers;
 
+import br.com.financeiro.ExceptionsCustons.RegistroDuplicadoException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,5 +22,13 @@ public class TratamentoErrors extends ResponseEntityExceptionHandler {
 
         return handleExceptionInternal(ex, bodyOfResponse,
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(value = {RegistroDuplicadoException.class})
+    protected ResponseEntity<Object> duplicate(RegistroDuplicadoException ex, WebRequest request) {
+        String bodyOfResponse = "O Registro informado já existe na base";
+
+        return handleExceptionInternal(ex, bodyOfResponse,
+                new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE, request);
     }
 }

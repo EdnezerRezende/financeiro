@@ -1,5 +1,6 @@
 package br.com.financeiro.service;
 
+import br.com.financeiro.ExceptionsCustons.RegistroDuplicadoException;
 import br.com.financeiro.models.Cartao;
 import br.com.financeiro.models.Conta;
 import br.com.financeiro.models.FaturaCartao;
@@ -36,21 +37,29 @@ public class CartaoService {
 	}
 	
 	public void salvarEAtualizar(Cartao cartao, Long idConta) {
-		cartao.setConta(contaRepository.getOne(idConta));
+		Cartao cartaoExistente = cartaoRepository.getCartaoByNumeroCartaoEquals(cartao.getNumeroCartao());
+		if ( cartaoExistente ){
+			throw new RegistroDuplicadoException("Cartão informado já cadastrado anteriormente");
+		}
+
+		Conta conta = new Conta();
+		conta.setIdConta(idConta);
+		cartao.setConta(conta);
 		cartaoRepository.save(cartao);
 
 		FaturaCartao faturaCartao = new FaturaCartao();
 		faturaCartao.setCartao(cartao);
 		faturaCartao.setSituacao(true);
 
+
 		LocalDate dataHoje = LocalDate.now();
+		LocalDate dataFaturaProxima = LocalDate.now();
+		dataFaturaProxima.ofEpochDay(cartao.getDiaVencimento());
 
-		if ( dataHoje.isBefore(cartao.getDataVencimento())){
-			faturaCartao.setDataPagamento(cartao.getDataVencimento());
+		if ( dataHoje.getDayOfMonth() >= cartao.getDiaVencimento()-10){
+			faturaCartao.setDataPagamento(dataHoje);
 		}else{
-			dataHoje.withDayOfMonth(cartao.getDataVencimento().getDayOfMonth());
-			faturaCartao.setDataPagamento(cartao.getDataVencimento().plusMonths(1));
-
+			faturaCartao.setDataPagamento(dataFaturaProxima);
 		}
 
 		faturaRepository.save(faturaCartao);
