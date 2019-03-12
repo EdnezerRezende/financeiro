@@ -35,6 +35,7 @@ public class Cartao implements Serializable {
 
 	private Long diaVencimento;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "cartao", cascade = javax.persistence.CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
 	private List<FaturaCartao> faturas;

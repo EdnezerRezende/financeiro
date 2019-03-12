@@ -1,6 +1,7 @@
 package br.com.financeiro.service;
 
 import br.com.financeiro.ExceptionsCustons.RegistroDuplicadoException;
+import br.com.financeiro.infra.validator.Validator;
 import br.com.financeiro.models.Cartao;
 import br.com.financeiro.models.Conta;
 import br.com.financeiro.models.FaturaCartao;
@@ -32,13 +33,13 @@ public class CartaoService {
 	private FaturaRepository faturaRepository;
 
 
-	public List<Conta> obterListaCartao(){
-		return cartaoRepository.findAll();
+	public List<Cartao> obterListaCartao(Long idConta){
+		return cartaoRepository.getAllByContaEquals(idConta);
 	}
 	
-	public void salvarEAtualizar(Cartao cartao, Long idConta) {
+	public void salvarEAtualizar(Cartao cartao, Long idConta) throws RegistroDuplicadoException {
 		Cartao cartaoExistente = cartaoRepository.getCartaoByNumeroCartaoEquals(cartao.getNumeroCartao());
-		if ( cartaoExistente ){
+		if (Validator.isNull(cartaoExistente) && cartaoExistente.getNumeroCartao() != null){
 			throw new RegistroDuplicadoException("Cartão informado já cadastrado anteriormente");
 		}
 
@@ -67,11 +68,11 @@ public class CartaoService {
 	
 
 	public void excluirCartao(Long idCartao) {
-		cartaoRepository.deleteById(idConta);
+		cartaoRepository.deleteById(idCartao);
 	}
 	
-	public Optional<Conta> obterCartaoById(Long id) {
-		return cartaoRepository.findById(id);
+	public Cartao obterCartaoById(Long id) {
+		return cartaoRepository.getOne(id);
 	}
 	
 }
