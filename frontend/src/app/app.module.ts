@@ -37,6 +37,7 @@ import { ChartsModule } from 'ng2-charts';
 import { CurrencyMaskModule } from "ng2-currency-mask";
 import { SharedDirectivesModule } from '../diretivas/shared-directives.module';
 import { ReferenciaServiceProvider } from '../providers/referencia-service/referencia-service';
+import { CartaoServiceProvider } from '../providers/cartao-service/cartao-service';
 
 export function jwtOptionsFactory(storage: Storage) {
   return {
@@ -108,7 +109,8 @@ export function jwtOptionsFactory(storage: Storage) {
     UsuariosServiceProvider,
     EntradaServiceProvider,
     SaidaServiceProvider,
-    ReferenciaServiceProvider
+    ReferenciaServiceProvider,
+    CartaoServiceProvider
     
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
