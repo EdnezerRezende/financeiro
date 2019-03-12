@@ -34,6 +34,7 @@ public class CartaoController {
 	@ApiOperation(value = "Salvar ou atualizar Cartão ")
 	@GetMapping(value = "/salvarEAtualizarCartao/conta/{idConta}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@RequestMapping(value = "salvarEAtualizarCartao/conta/{idConta}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@CrossOrigin
 	public void salvarEAtualizarCartao(@RequestBody(required = true) Cartao cartao, @PathVariable(value = "idConta") Long idConta) throws RegistroDuplicadoException {
 
 		cartaoService.salvarEAtualizar(cartao, idConta);

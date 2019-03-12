@@ -36,14 +36,14 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
 
-        Usuario user = new Usuario();
-        user.setEmail("godoirezende@gmail.com");
-        user.setCpf("78671043134");
-        try {
-            this.userService.salvar(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        Usuario user = new Usuario();
+//        user.setEmail("godoirezende@gmail.com");
+//        user.setCpf("78671043134");
+//        try {
+//            this.userService.salvar(user);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @GetMapping("/api/authenticate")

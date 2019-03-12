@@ -29,7 +29,7 @@ export class CartaoCadastrarPage {
       descricao: ['', Validators.required],
       numeroCartao: ['', Validators.required],
       banco: ['', Validators.required],
-      dataVencimento: ['', Validators.required],
+      diaVencimento: ['', Validators.required],
     });
   }
 
@@ -47,6 +47,13 @@ export class CartaoCadastrarPage {
   salvarCartao(){
     let loading = this.obterLoading();
     loading.present();
+    let numero:string = this.cartao.numeroCartao+'';
+
+    if (this.cartao.numeroCartao){
+
+      this.cartao.numeroCartao = Number(numero.replace(/[^\d]+/g,''));
+    }
+
     this.cartaoService.salvaCartao(this.cartao)
     .subscribe(
       () => {
@@ -55,7 +62,7 @@ export class CartaoCadastrarPage {
         let conta:Conta = JSON.parse(localStorage.getItem('conta'));
 
         localStorage.setItem('conta', JSON.stringify(conta));
-
+       
         this._alertCtrl.create({
           title: 'Sucesso',
           subTitle: 'Cartão inserida! Deseja inserir mais cartões ? ',
@@ -77,9 +84,10 @@ export class CartaoCadastrarPage {
     (err) => {
         console.log(err);
         loading.dismiss();
+        this.cartao.numeroCartao = Number(numero);
         this._alertCtrl.create({
           title: 'Falha de cadastro',
-          subTitle: 'Erro',//err.error.message,
+          subTitle: 'Erro' + err.error? err.error:'',
           buttons: [
             {
               text: 'Ok'

@@ -39,7 +39,7 @@ public class CartaoService {
 	
 	public void salvarEAtualizar(Cartao cartao, Long idConta) throws RegistroDuplicadoException {
 		Cartao cartaoExistente = cartaoRepository.getCartaoByNumeroCartaoEquals(cartao.getNumeroCartao());
-		if (Validator.isNull(cartaoExistente) && cartaoExistente.getNumeroCartao() != null){
+		if (Validator.isNotNull(cartaoExistente)){
 			throw new RegistroDuplicadoException("Cartão informado já cadastrado anteriormente");
 		}
 
@@ -55,12 +55,12 @@ public class CartaoService {
 
 		LocalDate dataHoje = LocalDate.now();
 		LocalDate dataFaturaProxima = LocalDate.now();
-		dataFaturaProxima.ofEpochDay(cartao.getDiaVencimento());
+		LocalDate dataFutura = LocalDate.of(dataFaturaProxima.getYear(), dataFaturaProxima.getMonth() ,cartao.getDiaVencimento().intValue());
 
-		if ( dataHoje.getDayOfMonth() >= cartao.getDiaVencimento()-10){
-			faturaCartao.setDataPagamento(dataHoje);
+		if (dataHoje.isAfter(dataFutura.minusDays(10))){
+			faturaCartao.setDataPagamento(dataFutura.plusMonths(1));
 		}else{
-			faturaCartao.setDataPagamento(dataFaturaProxima);
+			faturaCartao.setDataPagamento(dataFutura);
 		}
 
 		faturaRepository.save(faturaCartao);
