@@ -34,7 +34,7 @@ public class CartaoService {
 
 
 	public List<Cartao> obterListaCartao(Long idConta){
-		return cartaoRepository.getAllByContaEquals(idConta);
+		return cartaoRepository.findAllByContaIdConta(idConta);
 	}
 	
 	public void salvarEAtualizar(Cartao cartao, Long idConta) throws RegistroDuplicadoException {

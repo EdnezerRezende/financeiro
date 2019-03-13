@@ -10,6 +10,7 @@ import { LoginPage } from '../pages/login/login';
 import { EntradasPage } from '../pages/entradas/entradas';
 import { SaidasPage } from '../pages/saidas/saidas';
 import { CartaoCadastrarPage } from '../pages/cartao-cadastrar/cartao-cadastrar';
+import { CartoesPage } from '../pages/cartoes/cartoes';
 
 @Component({
   selector: 'myapp',
@@ -25,8 +26,9 @@ export class MyApp {
 
   public paginas = [
     {titulo: "Cartão", 
-              subTitulo: [{submenu:'Cadastrar Cartão', componente: CartaoCadastrarPage.name, iconeSub: 'card'
-                }], 
+              subTitulo: [{submenu:'Cadastrar Cartão', componente: CartaoCadastrarPage.name, iconeSub: 'card'},
+                {submenu:'Listar Cartões', componente: CartoesPage.name, iconeSub: 'card'}
+              ], 
               icone: 'card', mostra: true},
     {titulo: "Entradas", 
               subTitulo: [{submenu:'Lista Entradas', componente:EntradasPage.name, iconeSub: 'ios-add-circle-outline'

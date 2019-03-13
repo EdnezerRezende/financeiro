@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@Api(value = "Conta", description = "conta")
+@Api(value = "Cartao", description = "cartao")
 @CrossOrigin
 public class CartaoController {
 	

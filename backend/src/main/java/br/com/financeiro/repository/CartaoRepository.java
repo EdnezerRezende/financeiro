@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface CartaoRepository extends JpaRepository<Cartao, Long> {
     public Cartao getCartaoByNumeroCartaoEquals(Long numeroCartao);
-    public List<Cartao> getAllByContaEquals(Long idConta);
+    public List<Cartao> findAllByContaIdConta(Long idConta);
 }
