@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams, AlertController, LoadingController
 import { CartaoDTO } from '../../modelos/cartao.dto';
 import { Conta } from '../../modelos/conta';
 import { CartaoServiceProvider } from '../../providers/cartao-service/cartao-service';
+import { FaturaServiceProvider } from '../../providers/fatura-service/fatura-service';
+import { FaturaCartaoDTO } from '../../modelos/fatura_cartao.dto';
+import { FaturasPage } from '../faturas/faturas';
 
 @IonicPage()
 @Component({
@@ -13,9 +16,11 @@ export class CartoesPage {
 
   cartoes:CartaoDTO[];
   cartoesSearch: CartaoDTO[];
+  faturas:FaturaCartaoDTO[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private _loadingCtrl: LoadingController,
-    private _alertCtrl: AlertController, private _cartaoService:CartaoServiceProvider) {
+    private _alertCtrl: AlertController, private _cartaoService:CartaoServiceProvider,
+    private _faturaService: FaturaServiceProvider) {
       this.cartoes = new Array<CartaoDTO>();
       this.cartoesSearch = new Array<CartaoDTO>();
       this.obterCartoes();
@@ -71,6 +76,10 @@ export class CartoesPage {
         }
       ]
     }).present();
+  }
+
+  obterFaturasCartao(cartao:CartaoDTO){
+    this.navCtrl.push(FaturasPage.name, {idCartao: cartao.idCartao});
   }
 
   deletarRegistro(cartao:CartaoDTO, loading){

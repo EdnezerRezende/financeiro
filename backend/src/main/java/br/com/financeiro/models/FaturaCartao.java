@@ -29,7 +29,7 @@ public class FaturaCartao implements Serializable {
 
 	@JsonIgnore
 	@ManyToOne
-	@JoinTable(name = "cartao_faturaCartao", joinColumns = {@JoinColumn(name = "id_fatura", referencedColumnName = "idFatura")},
+	@JoinTable(name = "cartao_fatura_cartao", joinColumns = {@JoinColumn(name = "id_fatura", referencedColumnName = "idFatura")},
 			inverseJoinColumns = {@JoinColumn(name = "id_cartao", referencedColumnName = "idCartao")})
 	private Cartao cartao;
 

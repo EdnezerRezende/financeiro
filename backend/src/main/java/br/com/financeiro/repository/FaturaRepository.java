@@ -5,7 +5,10 @@ import br.com.financeiro.models.FaturaCartao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface FaturaRepository extends JpaRepository<FaturaCartao, Long> {
-    public FaturaCartao findFirstBySituacaoIsTrueAndCartaoEquals(Cartao cartao);
+    public List<FaturaCartao> findFirstBySituacaoIsTrueAndCartaoEquals(Cartao cartao);
+
 }
