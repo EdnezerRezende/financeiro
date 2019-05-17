@@ -1,0 +1,18 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Faturas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list sliding="true" >
+    <ion-item detail-push  *ngFor="let fatura of faturas">
+      <h4><label>Data de Pagamento: </label>{{fatura.dataPagamento | date: 'dd/MM/yyyy'}}</h4>
+      <h4><label>situacao: </label>{{fatura.situacao? 'A vencer': 'Conta paga'}} </h4>
+      <!-- <ion-icon (click)="deletarEntrada(entrada)" item-right isActive="true" name="md-trash"></ion-icon> -->
+    </ion-item>
+  </ion-list>
+</ion-content>
